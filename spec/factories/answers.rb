@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :answer do
-    question_id 1
-    content "MyText"
+    association(:question)
+    content  "Forty two. That's it. That's all there is."
   end
 end
