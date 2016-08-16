@@ -12,7 +12,7 @@ RSpec.describe QuestionsController, type: :controller do
       expect(assigns(:questions)).to eq questions
     end
 
-    it 'render index view' do
+    it 'render :index template' do
       expect(response).to render_template :index
     end
   end
@@ -24,7 +24,7 @@ RSpec.describe QuestionsController, type: :controller do
       expect(assigns(:question)).to eq question
     end
 
-    it 'render show view' do
+    it 'render :show template' do
       expect(response).to render_template :show
     end
   end
@@ -36,7 +36,7 @@ RSpec.describe QuestionsController, type: :controller do
       expect(assigns(:question)).to be_a_new(Question)
     end
 
-    it 'render new view' do
+    it 'render :new template' do
       expect(response).to render_template :new
     end
   end
@@ -48,7 +48,7 @@ RSpec.describe QuestionsController, type: :controller do
       expect(assigns(:question)).to eq question
     end
 
-    it 'render edit view' do
+    it 'render :edit template' do
       expect(response).to render_template :edit
     end
   end
@@ -60,7 +60,7 @@ RSpec.describe QuestionsController, type: :controller do
           .to change(Question, :count).by(1)
       end
 
-      it 'redirects to show view' do
+      it 'redirects to :show template' do
         post :create, question: attributes_for(:question)
         expect(response).to redirect_to assigns(:question)
       end
@@ -72,7 +72,7 @@ RSpec.describe QuestionsController, type: :controller do
           .to_not change(Question, :count)
       end
 
-      it 'redirects to new view' do
+      it 'redirects to :new template' do
         post :create, question: attributes_for(:invalid_question)
         expect(response).to render_template :new
       end
@@ -105,7 +105,7 @@ RSpec.describe QuestionsController, type: :controller do
         expect(question.content).to eq 'Give me the Ultimate Question of Life, the Universe, and Everything'
       end
 
-      it 're-renders edit view' do
+      it 'render :edit template' do
         patch :update, id: question, question: attributes_for(:invalid_question)
         expect(response).to render_template :edit
       end
@@ -119,7 +119,7 @@ RSpec.describe QuestionsController, type: :controller do
       expect { delete :destroy, id: question }.to change(Question, :count).by(-1)
     end
 
-    it 'redirects to index view' do
+    it 'redirects to :index template' do
       delete :destroy, id: question
       expect(response).to redirect_to questions_path
     end

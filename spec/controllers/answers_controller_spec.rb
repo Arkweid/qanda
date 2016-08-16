@@ -12,7 +12,7 @@ RSpec.describe AnswersController, type: :controller do
           .to change(question.answers, :count).by(1)
       end
 
-      it 'redirect question#show' do
+      it 'redirect to question#show' do
         post :create, answer: attributes_for(:answer), question_id: question
         expect(response).to redirect_to assigns(:question)
       end
@@ -24,7 +24,7 @@ RSpec.describe AnswersController, type: :controller do
           .to_not change(Answer, :count)
       end
 
-      it 'render create template' do
+      it 'render question#show' do
         post :create, answer: attributes_for(:invalid_answer), question_id: question
         expect(response).to render_template 'questions/show'
       end
