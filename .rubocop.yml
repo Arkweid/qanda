@@ -1,0 +1,30 @@
+AllCops:
+  Exclude:
+    - config/initializers/secret_token.rb
+    - db/schema.rb
+    - db/seeds.rb
+    - bin/setup
+    - bin/spring
+    - spec/rails_helper.rb
+    - spec/spec_helper.rb
+    - config/application.rb    
+    - config/initializers/*.*
+    - config/environments/*.*
+    - Rakefile
+    - Gemfile
+
+
+Rails:
+  Enabled: true
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 100
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/MethodLength:
+  Max: 20
