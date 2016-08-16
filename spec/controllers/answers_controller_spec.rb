@@ -19,9 +19,9 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     context 'answer with invalid data' do
-      it 'save new answer for question' do
+      it 'do not save new answer anywhere' do
         expect { post :create, answer: attributes_for(:invalid_answer), question_id: question }
-          .to_not change(question.answers, :count)
+          .to_not change(Answer, :count)
       end
 
       it 'render create template' do
