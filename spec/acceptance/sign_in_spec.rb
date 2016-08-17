@@ -1,18 +1,15 @@
 require 'rails_helper'
 
-feature 'User sign in', %q{
+feature 'User sign in', '
   In order to be able to ask question
   As an user
   I want to be able to sign on
-} do
-  
-  scenario 'Registred user try to sign in' do
-    User.create!(email: 'example@test.ru', password: '12345678')
+' do
 
-    visit new_user_session_path
-    fill_in 'Email', with: 'example@test.ru'
-    fill_in 'Password', with: '12345678'
-    click_on 'Log in'
+  given(:user) { create(:user) }
+
+  scenario 'Registred user try to sign in' do
+    sign_in(user)
 
     expect(page).to have_content 'Signed in successfully'
     expect(current_path).to eq root_path
