@@ -94,8 +94,9 @@ RSpec.describe QuestionsController, type: :controller do
 
       it 'changes attributes question' do
         patch :update, id: question, question: { title: 'new title', content: 'new body' }
-        expect(question.reload.title).to eq 'new title'
-        expect(question.reload.content).to eq 'new body'
+        question.reload
+        expect(question.title).to eq 'new title'
+        expect(question.content).to eq 'new body'
       end
 
       it 'redirects to updated question' do

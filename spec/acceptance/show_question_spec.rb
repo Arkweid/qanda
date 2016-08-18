@@ -6,12 +6,14 @@ feature 'Question show', '
   I want to be able to see the question content
 ' do
 
-  given!(:question) { create(:question) }
+  given!(:question) { create :question }
+  given!(:answer) { create :answer, question: question }
 
   scenario 'Non-authenticated user want to show content' do
     visit questions_path
     click_on 'show'
-
-    expect(page).to have_content 'Test content 1'
+    save_and_open_page
+    expect(page).to have_content 'Test title 1'
+    expect(page).to have_content 'Forty two. That`s it. That`s all there is.'
   end
 end

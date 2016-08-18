@@ -1,2 +1,7 @@
 p = @question.title
 p = @question.content
+
+table.answers
+  - @answers.each do |answer|
+    tr
+      td.answer_content = answer.content
