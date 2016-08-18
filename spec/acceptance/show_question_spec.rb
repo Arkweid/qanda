@@ -12,7 +12,7 @@ feature 'Question show', '
   scenario 'Non-authenticated user want to show content' do
     visit questions_path
     click_on 'show'
-    save_and_open_page
+
     expect(page).to have_content 'Test title 1'
     expect(page).to have_content 'Forty two. That`s it. That`s all there is.'
   end
