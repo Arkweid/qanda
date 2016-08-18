@@ -1,7 +1,15 @@
 FactoryGirl.define do
+  sequence :title do |n|
+    "Test title #{n}"
+  end
+
+  sequence :content do |n|
+    "Test content #{n}"
+  end  
+
   factory :question do
-    title 'Very important question'
-    content 'Give me the Ultimate Question of Life, the Universe, and Everything'
+    title
+    content
   end
 
   factory :invalid_question, class: 'Question' do

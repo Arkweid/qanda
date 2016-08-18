@@ -1,1 +1,7 @@
-p= link_to 'Ask question', new_question_path
+p = link_to 'Ask question', new_question_path
+
+table.questions
+  - @questions.each do |question|
+    tr
+      td.question_title = question.title
+      td.question_link = link_to 'show', question_path(question)

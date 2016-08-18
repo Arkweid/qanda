@@ -107,8 +107,8 @@ RSpec.describe QuestionsController, type: :controller do
     context 'with invalid attributes' do
       it 'to_not change attributes' do
         patch :update, id: question, question: { title: 'new title', content: nil }
-        expect(question.title).to eq 'Very important question'
-        expect(question.content).to eq 'Give me the Ultimate Question of Life, the Universe, and Everything'
+        expect(question.title).to eq 'Test title 29'
+        expect(question.content).to eq 'Test content 29'
       end
 
       it 'render :edit template' do
