@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
-  let(:question) { create(:question) }
+  let(:user) { create :user }
+  let(:question) { create :question, user_id: user.id }
 
   describe 'GET #index' do
     let(:questions) { create_list(:question, 2) }
@@ -108,8 +109,8 @@ RSpec.describe QuestionsController, type: :controller do
     context 'with invalid attributes' do
       it 'to_not change attributes' do
         patch :update, id: question, question: { title: 'new title', content: nil }
-        expect(question.title).to eq 'Test title 30'
-        expect(question.content).to eq 'Test content 30'
+        expect(question.title).to eq 'Test title 32'
+        expect(question.content).to eq 'Test content 32'
       end
 
       it 'render :edit template' do
@@ -124,7 +125,7 @@ RSpec.describe QuestionsController, type: :controller do
     before { question }
 
     it 'deletes question' do
-      expect { delete :destroy, id: question }.to change(Question, :count).by(-1)
+      expect { delete :destroy, id: question, user_id: user.id }.to change(Question, :count).by(-1)
     end
 
     it 'redirects to :index template' do
