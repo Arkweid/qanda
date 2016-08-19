@@ -11,7 +11,7 @@ feature 'User sign in', '
   scenario 'Registred user try to sign in' do
     sign_in(user)
 
-    expect(page).to have_content 'Signed in successfully'
+    expect(page).to have_content 'Signed in successfully'   
     expect(current_path).to eq root_path
   end
 
