@@ -22,6 +22,6 @@ feature 'User sign in', '
     click_on 'Log in'
 
     expect(page).to have_content 'Invalid Email or password. Log in Email Password Remember me Sign up Forgot your password?'
-    expect(current_path).to eq new_user_session_path
+    expect(current_path).to eq user_session_path
   end
 end
