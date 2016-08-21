@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
-  let(:user) { create :user }
-  let(:question) { create :question, user_id: user.id }
+  let(:question) { create :question }
 
   describe 'GET #index' do
     let(:questions) { create_list(:question, 2) }
@@ -122,15 +121,31 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'DELETE #destroy' do
     sign_in_user
-    before { question }
+    
+    context 'user is question owner' do
+      before { question.update_attribute(:user_id, @user.id) }
 
-    it 'deletes question' do
-      expect { delete :destroy, id: question, user_id: user.id }.to change(Question, :count).by(-1)
+      it 'delete own question' do
+        expect { delete :destroy, id: question }.to change(Question, :count).by(-1)
+      end    
+
+      it 'redirects to :index template' do
+        delete :destroy, id: question    
+        expect(response).to redirect_to questions_path
+      end
     end
 
-    it 'redirects to :index template' do
-      delete :destroy, id: question
-      expect(response).to redirect_to questions_path
+     context 'user is not question owner' do
+      before { question.update_attribute(:user_id, nil) }
+        
+      it 'delete own question' do
+        expect { delete :destroy, id: question }.to_not change(Question, :count)
+      end    
+
+      it 'redirects to :index template' do
+        delete :destroy, id: question    
+        expect(response).to redirect_to question_path(question)
+      end
     end
   end
 end
