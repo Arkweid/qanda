@@ -3,13 +3,10 @@ FactoryGirl.define do
     "Test title #{n}"
   end
 
-  sequence :content do |n|
-    "Test content #{n}"
-  end
-
   factory :question do
+    user
     title
-    content
+    content "Some question"
   end
 
   factory :invalid_question, class: 'Question' do

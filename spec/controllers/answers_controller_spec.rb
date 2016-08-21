@@ -1,8 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-  let(:question) { create :question }
-  let(:answer) { create :answer, question: question }
+  sign_in_user
+
+  let(:user) { create :user }
+  let(:question) { create :question, user_id: user.id }
+  let(:answer) { create :answer, question: question, user_id: user.id }
   let(:invalid_answer) { create :invalid_answer, question: question }
 
   describe 'POST #create' do
@@ -13,7 +16,7 @@ RSpec.describe AnswersController, type: :controller do
       end
 
       it 'redirect to question#show' do
-        post :create, answer: attributes_for(:answer), question_id: question
+        post :create, answer: attributes_for(:answer), question_id: question 
         expect(response).to redirect_to assigns(:question)
       end
     end

@@ -109,7 +109,7 @@ RSpec.describe QuestionsController, type: :controller do
       it 'to_not change attributes' do
         patch :update, id: question, question: { title: 'new title', content: nil }
         expect(question.title).to eq 'Test title 32'
-        expect(question.content).to eq 'Test content 32'
+        expect(question.content).to eq 'Some question'
       end
 
       it 'render :edit template' do
