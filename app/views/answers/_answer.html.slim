@@ -1,0 +1,4 @@
+li id="answer-#{answer.id}"
+  span.content= answer.content
+  - if user_signed_in? && current_user.author_of?(answer)
+    = link_to 'Delete', question_answer_path(@question, answer), remote: true, method: :delete

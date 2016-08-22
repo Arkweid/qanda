@@ -1,9 +1,16 @@
-p = link_to('Delete question', question_path(@question), :method => :delete)
+p
+  - if user_signed_in? && current_user.author_of?(@question)
+    = link_to('Delete question', question_path(@question), :method => :delete)
 
-p = @question.title
-p = @question.content
+p= @question.title
+p= @question.content
 
-table.answers
-  - @answers.each do |answer|
-    tr
-      td.answer_content = answer.content
+- if user_signed_in?
+  = form_for([@question, @answer]) do |f|
+    = f.label :content
+    = f.text_field :content
+    = f.submit 'Add answer'
+
+p
+  -if @question.answers.any?
+    = render @question.answers
