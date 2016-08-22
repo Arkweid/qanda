@@ -29,7 +29,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'render question#show' do
         post :create, answer: attributes_for(:invalid_answer), question_id: question
-        expect(response).to render_template 'questions/show'
+        expect(response).to redirect_to assigns(:question)
       end
     end
   end

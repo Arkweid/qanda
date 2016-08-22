@@ -24,17 +24,13 @@ I want to delete my question
     sign_in(another_user)
 
     visit question_path(question)
-    click_on 'Delete question'
 
-    expect(page).to have_content 'You not owner of this question'
-    expect(current_path).to eq question_path(question)
+    expect(page).to_not have_content 'Delete question'
   end
 
   scenario 'Non registred user try to delete message' do
     visit question_path(question)
-    click_on 'Delete question'
 
-    expect(page).to have_content 'You need to sign in or sign up before continuing.'
-    expect(current_path).to eq new_user_session_path
+    expect(page).to_not have_content 'Delete question'
   end  
 end

@@ -107,8 +107,7 @@ RSpec.describe QuestionsController, type: :controller do
 
     context 'with invalid attributes' do
       it 'to_not change attributes' do
-        patch :update, id: question, question: { title: 'new title', content: nil }
-        expect(question.title).to eq 'Test title 32'
+        patch :update, id: question, question: { title: nil, content: 'new question' }
         expect(question.content).to eq 'Some question'
       end
 

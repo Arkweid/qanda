@@ -9,21 +9,19 @@ feature 'Create answer', '
   given(:user) { create(:user) }
   given(:question) { create(:question, user_id: user.id) }  
 
-  scenario 'Authenticated user create question' do
+  scenario 'Authenticated user add answer' do
     sign_in(user)
 
     visit question_path(question)
-    fill_in 'Content', with: 'Maybe 42?'
-    click_on 'Add question'
-
-    expect(page).to have_content 'Your answer successfully created.'
+    fill_in 'Content', with: 'Maybe its 42?'
+    click_on 'Add answer'
+save_and_open_page
+    expect(page).to have_content 'Your answer successfully saved'
   end
 
-  scenario 'Non-authenticated user create answer' do
+  scenario 'Non-authenticated user add answer' do
     visit question_path(question)
-    fill_in 'Content', with: 'Maybe 42?'
-    click_on 'Add question'
 
-    expect(page).to have_content 'You need to sign in or sign up before continuing.'
+    expect(page).to_not have_content 'Add answer'
   end
 end
