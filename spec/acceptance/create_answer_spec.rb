@@ -7,7 +7,7 @@ feature 'Create answer', '
 ' do
 
   given(:user) { create(:user) }
-  given(:question) { create(:question, user_id: user.id) }  
+  given(:question) { create(:question, user_id: user.id) }
 
   scenario 'Authenticated user add answer' do
     sign_in(user)
@@ -15,7 +15,7 @@ feature 'Create answer', '
     visit question_path(question)
     fill_in 'Content', with: 'Maybe its 42?'
     click_on 'Add answer'
-save_and_open_page
+
     expect(page).to have_content 'Your answer successfully saved'
   end
 

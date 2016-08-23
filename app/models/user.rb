@@ -6,9 +6,9 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-  
+
   # Returns true if the current user is owner of object
   def author_of?(object)
     object.user_id == id
-  end  
+  end
 end

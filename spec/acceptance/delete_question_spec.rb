@@ -32,5 +32,5 @@ I want to delete my question
     visit question_path(question)
 
     expect(page).to_not have_content 'Delete question'
-  end  
+  end
 end

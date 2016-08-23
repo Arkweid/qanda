@@ -120,29 +120,29 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'DELETE #destroy' do
     sign_in_user
-    
+
     context 'user is question owner' do
       before { question.update_attribute(:user_id, @user.id) }
 
       it 'delete own question' do
         expect { delete :destroy, id: question }.to change(Question, :count).by(-1)
-      end    
+      end
 
       it 'redirects to :index template' do
-        delete :destroy, id: question    
+        delete :destroy, id: question
         expect(response).to redirect_to questions_path
       end
     end
 
-     context 'user is not question owner' do
+    context 'user is not question owner' do
       before { question.update_attribute(:user_id, nil) }
-        
+
       it 'delete own question' do
         expect { delete :destroy, id: question }.to_not change(Question, :count)
-      end    
+      end
 
       it 'redirects to :index template' do
-        delete :destroy, id: question    
+        delete :destroy, id: question
         expect(response).to redirect_to question_path(question)
       end
     end

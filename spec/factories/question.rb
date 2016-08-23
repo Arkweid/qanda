@@ -6,7 +6,7 @@ FactoryGirl.define do
   factory :question do
     user
     title
-    content "Some question"
+    content 'Some question'
   end
 
   factory :invalid_question, class: 'Question' do

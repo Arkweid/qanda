@@ -10,9 +10,9 @@ feature 'User sign out', '
 
   scenario 'Registred user try to sign out' do
     sign_in(user)
-    click_on 'Logout'   
+    click_on 'Logout'
 
-    expect(page).to have_content 'Signed out successfully.'   
+    expect(page).to have_content 'Signed out successfully.'
     expect(current_path).to eq root_path
   end
 end

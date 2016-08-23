@@ -13,8 +13,8 @@ feature 'User can sign up', '
   scenario 'Non registred user try to sign in' do
     sign_up_new_user
 
-    expect(page).to have_content 'Welcome! You have signed up successfully.'   
-    expect(current_path).to eq root_path    
+    expect(page).to have_content 'Welcome! You have signed up successfully.'
+    expect(current_path).to eq root_path
   end
 
   scenario 'Sign up with already taken email' do
@@ -23,8 +23,8 @@ feature 'User can sign up', '
     fill_in 'Password confirmation', with: user.password
     click_on 'Sign up'
 
-    expect(page).to have_content 'Email has already been taken'    
- end
+    expect(page).to have_content 'Email has already been taken'
+  end
 
   scenario 'Sign up with blank params' do
     fill_in 'Email', with: nil
@@ -34,7 +34,7 @@ feature 'User can sign up', '
 
     expect(page).to have_content "Email can't be blank"
     expect(page).to have_content "Password can't be blank"
- end
+  end
 
   scenario 'Sign up with do not match password' do
     fill_in 'Email', with: 'example@exam.com'
@@ -44,5 +44,5 @@ feature 'User can sign up', '
 
     expect(page).to have_content "Password confirmation doesn't match Password"
     expect(page).to have_content 'Password is too short (minimum is 6 characters)'
- end  
+  end
 end

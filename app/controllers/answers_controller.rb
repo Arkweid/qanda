@@ -4,11 +4,11 @@ class AnswersController < ApplicationController
   def create
     @question = Question.find(params[:question_id])
     @answer = @question.answers.build(answer_params.merge(user: current_user))
-    if @answer.save
-      flash[:notice] = 'Your answer successfully saved'
-    else
-      flash[:notice] = 'Answer not saved'
-    end
+    flash[:notice] = if @answer.save
+                       'Your answer successfully saved'
+                     else
+                       'Answer not saved'
+                     end
     redirect_to @question
   end
 
@@ -18,9 +18,9 @@ class AnswersController < ApplicationController
     if current_user.author_of?(@answer)
       @answer.destroy
       flash[:notice] = 'Your answer is successfully deleted.'
-      redirect_to @question
     end
-  end  
+    redirect_to @question
+  end
 
   private
 
