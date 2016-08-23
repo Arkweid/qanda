@@ -20,7 +20,7 @@ I want to delete my question
     expect(current_path).to eq questions_path
   end
 
-  scenario 'Not owner delete try to question' do
+  scenario 'Not owner try to delete question' do
     sign_in(another_user)
 
     visit question_path(question)
