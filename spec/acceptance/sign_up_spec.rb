@@ -6,7 +6,7 @@ feature 'User can sign up', '
   I want to sign up
 ' do
 
-  given(:user) { create(:user) }
+  given(:user) { create :user }
 
   before { visit new_user_registration_path }
 

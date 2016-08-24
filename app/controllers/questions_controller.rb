@@ -21,17 +21,20 @@ class QuestionsController < ApplicationController
   def create
     @question = current_user.questions.build(question_params)
     if @question.save
-      flash[:notice] = 'Your question successfully created.'
+      flash[:success] = 'Your question successfully created.'
       redirect_to @question
     else
       render :new
+      flash[:error] = 'Question not saved'
     end
   end
 
   def update
     if @question.update(question_params)
+      flash[:success] = 'Your question successfully updated.'
       redirect_to @question
     else
+      flash[:error] = 'Your question successfully updated.'
       render :edit
     end
   end
@@ -39,10 +42,10 @@ class QuestionsController < ApplicationController
   def destroy
     if current_user.author_of?(@question)
       @question.destroy
-      flash[:notice] = 'Question successfully deleted.'
+      flash[:success] = 'Question successfully deleted.'
       redirect_to questions_path
     else
-      flash[:notice] = 'You not owner of this question'
+      flash[:error] = 'You not owner of this question'
       redirect_to @question
     end
   end

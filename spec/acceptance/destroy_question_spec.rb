@@ -8,7 +8,7 @@ I want to delete my question
 
   given(:user) { create :user }
   given(:another_user) { create :user }
-  given(:question) { create :question, user_id: user.id }
+  given(:question) { create :question, user: user }
 
   scenario 'Owner delete his question' do
     sign_in(user)
@@ -17,6 +17,7 @@ I want to delete my question
     click_on 'Delete question'
 
     expect(page).to have_content 'Question successfully deleted.'
+    expect(page).to_not have_content 'Test title'
     expect(current_path).to eq questions_path
   end
 

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe AnswersController, type: :controller do
   sign_in_user
 
-  let(:question) { create :question }
+  let(:question) { create :question, user: @user }
   let(:answer) { create :answer, question: question, user: @user }
   let(:invalid_answer) { create :invalid_answer, question: question }
 
@@ -38,12 +38,12 @@ RSpec.describe AnswersController, type: :controller do
       before { answer }
 
       it 'delete answer from question' do
-        expect { delete :destroy, id: answer, question_id: question, user: @user }
+        expect { delete :destroy, id: answer }
           .to change(question.answers, :count).by(-1)
       end
 
       it 'redirect to question#show' do
-        delete :destroy, id: answer, question_id: question, user: @user
+        delete :destroy, id: answer
         expect(response).to redirect_to assigns(:question)
       end
     end
@@ -53,12 +53,12 @@ RSpec.describe AnswersController, type: :controller do
       let!(:another_answer) { create :answer, question: question, user: another_user }
 
       it 'delete answer from question' do
-        expect { delete :destroy, id: another_answer, question_id: question, user: @user }
+        expect { delete :destroy, id: another_answer }
           .to_not change(Answer, :count)
       end
 
       it 'redirect to question#show' do
-        delete :destroy, id: another_answer, question_id: question, user: @user
+        delete :destroy, id: another_answer
         expect(response).to redirect_to assigns(:question)
       end
     end

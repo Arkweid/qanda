@@ -6,8 +6,8 @@ feature 'Create answer', '
   I want to be able to add an answer
 ' do
 
-  given(:user) { create(:user) }
-  given(:question) { create(:question, user_id: user.id) }
+  given(:user) { create :user }
+  given(:question) { create :question, user: user }
 
   scenario 'Authenticated user add answer' do
     sign_in(user)
@@ -16,6 +16,7 @@ feature 'Create answer', '
     fill_in 'Content', with: 'Maybe its 42?'
     click_on 'Add answer'
 
+    expect(page).to have_content 'Maybe its 42?'
     expect(page).to have_content 'Your answer successfully saved'
   end
 

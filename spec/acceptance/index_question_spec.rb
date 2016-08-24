@@ -6,11 +6,11 @@ feature 'Questions index', '
   I want to be able to see the questions index
 ' do
 
-  given!(:question) { create_list(:question, 10) }
+  given!(:question) { create_pair :question }
 
   scenario 'Non-authenticated user visit qustions#index' do
     visit questions_path
 
-    expect(page).to have_content 'Test title 10'
+    expect(page).to have_css('.question_title', count: 2)
   end
 end

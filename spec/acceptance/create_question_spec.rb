@@ -6,7 +6,7 @@ feature 'Create question', '
   I want to be able to ask a question
 ' do
 
-  given(:user) { create(:user) }
+  given(:user) { create :user }
 
   scenario 'Authenticated user create question' do
     sign_in(user)
