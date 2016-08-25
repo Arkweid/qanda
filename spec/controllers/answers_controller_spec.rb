@@ -14,6 +14,11 @@ RSpec.describe AnswersController, type: :controller do
           .to change(question.answers, :count).by(1)
       end
 
+      it 'new asnwer belongs_to to user' do
+        expect { post :create, answer: attributes_for(:answer), question_id: question }
+          .to change(@user.answers, :count).by(1)
+      end
+
       it 'redirect to question#show' do
         post :create, answer: attributes_for(:answer), question_id: question
         expect(response).to redirect_to assigns(:question)
