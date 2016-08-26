@@ -106,13 +106,14 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     context 'with invalid attributes' do
+      before { patch :update, id: question, question: attributes_for(:invalid_question) }
+
       it 'to_not change attributes' do
-        patch :update, id: question, question: { title: nil, content: 'new question' }
+        question.reload
         expect(question.content).to eq 'Some question'
       end
 
       it 'render :edit template' do
-        patch :update, id: question, question: attributes_for(:invalid_question)
         expect(response).to render_template :edit
       end
     end
@@ -135,15 +136,17 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     context 'user is not question owner' do
-      before { question.update_attribute(:user_id, nil) }
+      let(:another_user) { create :another_user }
+
+      before { question.update_attribute(:user_id, another_user.id) }
 
       it 'delete own question' do
         expect { delete :destroy, id: question }.to_not change(Question, :count)
       end
 
-      it 'redirects to :index template' do
+      it 'render to :show template' do
         delete :destroy, id: question
-        expect(response).to redirect_to question_path(question)
+        expect(response).to render_template 'questions/show'
       end
     end
   end

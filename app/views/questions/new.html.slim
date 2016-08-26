@@ -1,3 +1,6 @@
+- if @question.errors.any?
+  = render 'question_errors'
+
 = form_for @question do |f|
   = f.label :title
   = f.text_field :title

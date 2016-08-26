@@ -1,9 +1,15 @@
 p
   - if user_signed_in? && current_user.author_of?(@question)
-    = link_to('Delete question', question_path(@question), :method => :delete)
+    = link_to('Delete question', question_path(@question), method: :delete)
 
 p= @question.title
 p= @question.content
+
+ul
+  - if @answer.errors.any?
+    - @answer.errors.full_messages.each do |message|
+      li
+        = message
 
 - if user_signed_in?
   = form_for([@question, @answer]) do |f|

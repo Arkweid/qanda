@@ -3,14 +3,14 @@ class AnswersController < ApplicationController
 
   def create
     @question = Question.find(params[:question_id])
-    @answer = @question.answers.build(answer_params.merge(user: current_user))
+    @answer = Answer.new(answer_params.merge(user: current_user, question: @question))
     if @answer.save
       flash[:success] = 'Your answer successfully saved'
+      redirect_to @question      
     else
-      @question.answers.reload
-      flash[:error] = 'Answer not saved'
+      flash.now[:error] = 'Answer not saved'
+      render 'questions/show'
     end
-    redirect_to @question
   end
 
   def destroy
@@ -19,10 +19,11 @@ class AnswersController < ApplicationController
     if current_user.author_of?(@answer)
       @answer.destroy
       flash[:success] = 'Your answer is successfully deleted.'
+      redirect_to @question
     else
-      flash[:error] = 'You not owner of this answer'
+      flash.now[:error] = 'You not owner of this answer'
+      render 'questions/show'
     end
-    redirect_to @question
   end
 
   private
