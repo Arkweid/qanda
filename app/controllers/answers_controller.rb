@@ -3,14 +3,7 @@ class AnswersController < ApplicationController
 
   def create
     @question = Question.find(params[:question_id])
-    @answer = Answer.new(answer_params.merge(user: current_user, question: @question))
-    if @answer.save
-      flash[:success] = 'Your answer successfully saved'
-      redirect_to @question
-    else
-      flash.now[:error] = 'Answer not saved'
-      render 'questions/show'
-    end
+    @answer = Answer.create(answer_params.merge(user: current_user, question: @question))
   end
 
   def destroy

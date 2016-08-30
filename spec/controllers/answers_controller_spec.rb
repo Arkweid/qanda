@@ -10,30 +10,30 @@ RSpec.describe AnswersController, type: :controller do
   describe 'POST #create' do
     context 'answer with valid data' do
       it 'save new answer for question' do
-        expect { post :create, answer: attributes_for(:answer), question_id: question }
+        expect { post :create, answer: attributes_for(:answer), question_id: question, format: :js }
           .to change(question.answers, :count).by(1)
       end
 
       it 'new asnwer belongs_to to user' do
-        expect { post :create, answer: attributes_for(:answer), question_id: question }
+        expect { post :create, answer: attributes_for(:answer), question_id: question, format: :js }
           .to change(@user.answers, :count).by(1)
       end
 
-      it 'redirect to questions#show' do
-        post :create, answer: attributes_for(:answer), question_id: question
-        expect(response).to redirect_to question
+      it 'render create template' do
+        post :create, answer: attributes_for(:answer), question_id: question, format: :js 
+        expect(response).to render_template :create
       end
     end
 
     context 'answer with invalid data' do
       it 'do not save new answer anywhere' do
-        expect { post :create, answer: attributes_for(:invalid_answer), question_id: question }
+        expect { post :create, answer: attributes_for(:invalid_answer), question_id: question, format: :js }
           .to_not change(Answer, :count)
       end
 
-      it 'render question#show' do
-        post :create, answer: attributes_for(:invalid_answer), question_id: question
-        expect(response).to render_template 'questions/show'
+      it 'render create template' do
+        post :create, answer: attributes_for(:invalid_answer), question_id: question, format: :js
+        expect(response).to render_template :create
       end
     end
   end

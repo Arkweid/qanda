@@ -5,18 +5,15 @@ p
 p= @question.title
 p= @question.content
 
-ul
-  - if @answer.errors.any?
-    - @answer.errors.full_messages.each do |message|
-      li
-        = message
+.answer_errors
+  = render 'questions/answer_errors'
 
 - if user_signed_in?
-  = form_for([@question, @answer]) do |f|
+  = form_for([@question, @answer], remote: true) do |f|
     = f.label :content
     = f.text_field :content
     = f.submit 'Add answer'
 
-p
+.answers
   -if @question.answers.any?
     = render 'questions/answer'

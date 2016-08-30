@@ -9,7 +9,7 @@ feature 'Create answer', '
   given(:user) { create :user }
   given(:question) { create :question, user: user }
 
-  scenario 'Authenticated user add answer' do
+  scenario 'Authenticated user add answer', js: true do
     sign_in(user)
 
     visit question_path(question)
