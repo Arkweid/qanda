@@ -16,8 +16,9 @@ feature 'Create answer', '
     fill_in 'Content', with: 'Maybe its 42?'
     click_on 'Add answer'
 
-    expect(page).to have_content 'Maybe its 42?'
-    expect(page).to have_content 'Your answer successfully saved'
+    within '.answers' do
+      expect(page).to have_content 'Maybe its 42?'
+    end
   end
 
   scenario 'Non-authenticated user add answer' do

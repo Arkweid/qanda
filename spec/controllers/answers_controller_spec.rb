@@ -20,7 +20,7 @@ RSpec.describe AnswersController, type: :controller do
       end
 
       it 'render create template' do
-        post :create, answer: attributes_for(:answer), question_id: question, format: :js 
+        post :create, answer: attributes_for(:answer), question_id: question, format: :js
         expect(response).to render_template :create
       end
     end
