@@ -7,7 +7,7 @@ feature 'Create question', '
 ' do
 
   given(:user) { create :user }
-  
+
   context 'User already registred' do
     before { sign_in(user) }
 
@@ -29,7 +29,7 @@ feature 'Create question', '
       click_on 'Create'
 
       expect(page).to have_content "Content can't be blank"
-      expect(page).to have_content "Title can't be blank"      
+      expect(page).to have_content "Title can't be blank"
     end
 
     scenario 'his try create short question' do
@@ -41,7 +41,7 @@ feature 'Create question', '
 
       expect(page).to have_content 'Content is too short (minimum is 5 characters)'
       expect(page).to have_content 'Title is too short (minimum is 5 characters)'
-    end       
+    end
   end
 
   context 'User non-registred' do

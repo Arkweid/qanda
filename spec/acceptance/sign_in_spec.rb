@@ -13,7 +13,7 @@ feature 'User sign in', '
       sign_in(user)
 
       expect(page).to have_content 'Signed in successfully'
-      expect(current_path).to eq root_path      
+      expect(current_path).to eq root_path
     end
   end
 

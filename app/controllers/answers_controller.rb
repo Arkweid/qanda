@@ -6,7 +6,7 @@ class AnswersController < ApplicationController
     @answer = Answer.new(answer_params.merge(user: current_user, question: @question))
     if @answer.save
       flash[:success] = 'Your answer successfully saved'
-      redirect_to @question      
+      redirect_to @question
     else
       flash.now[:error] = 'Answer not saved'
       render 'questions/show'
