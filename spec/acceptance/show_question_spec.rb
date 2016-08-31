@@ -8,13 +8,12 @@ feature 'Question show', '
 
   given!(:user) { create :user }
   given!(:question) { create :question, user: user }
-  given!(:answer) { create :answer, question: question, user: user }
 
   scenario 'Non-authenticated user want to show content' do
     visit questions_path
     click_on 'show'
 
     expect(page).to have_content question.title
-    expect(page).to have_content 'Forty two. That`s it. That`s all there is.'
+    expect(page).to have_content question.content
   end
 end
