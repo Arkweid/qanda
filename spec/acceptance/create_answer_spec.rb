@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative 'acceptance_helper'
 
 feature 'Create answer', '
   In order to get the advise for community member
@@ -19,6 +19,15 @@ feature 'Create answer', '
     within '.answers' do
       expect(page).to have_content 'Maybe its 42?'
     end
+  end
+
+  scenario 'Authenticated user try add invalid answer', js: true do
+    sign_in(user)
+    
+    visit question_path(question)
+    click_on 'Add answer'
+
+    expect(page).to have_content 'Content is too short'
   end
 
   scenario 'Non-authenticated user add answer' do

@@ -14,6 +14,6 @@ p= @question.content
     = f.text_field :content
     = f.submit 'Add answer'
 
-  -if @question.answers.any?
-    .answers
+-if @question.answers.any?
+  .answers
     = render @question.answers
