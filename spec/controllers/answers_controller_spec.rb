@@ -68,4 +68,27 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
   end
+
+  describe 'PATCH #update' do
+    it 'assigns a requested answer to the variable @answer' do
+      patch :update, id: answer, question_id: question, answer: attributes_for(:answer), format: :js
+      expect(assigns(:answer)).to eq answer
+    end
+
+    it 'assigns a question to the variable @question' do
+      patch :update, id: answer, question_id: question, answer: attributes_for(:answer), format: :js
+      expect(assigns(:question)).to eq question
+    end
+
+    it 'changes answer attribute' do
+      patch :update, id: answer, question_id: question, answer: { content: 'new content' }, format: :js
+      answer.reload
+      expect(answer.content).to eq 'new content'
+    end
+
+    it 'render update template' do
+      patch :update, id: answer, question_id: question, answer: attributes_for(:answer), format: :js
+      expect(response).to render_template :update
+    end    
+  end
 end
