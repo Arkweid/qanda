@@ -1,15 +1,16 @@
 - if answer.persisted?
-  p = answer.content
+  li id="answer-#{answer.id}"
+    p = answer.content
 
-  - if user_signed_in?
-    p
-      = form_for answer, remote: true, html: { id: "edit-answer-#{answer.id}"} do |f|
-        = f.label :content, 'Answer'
-        = f.text_area :content
-        = f.submit 'Save'
+    - if user_signed_in?
+      p
+        = form_for answer, remote: true, html: { id: "edit-answer-#{answer.id}"} do |f|
+          = f.label :content, 'Answer', class: 'hidden'
+          = f.text_area :content
+          = f.submit 'Save'
 
-  - if user_signed_in? && current_user.author_of?(answer)
-    = link_to 'Delete answer', answer_path(answer), method: :delete
-    = link_to 'Edit', '', class: 'edit-answer-link', data: { answer_id: answer.id }
-br/
+    - if user_signed_in? && current_user.author_of?(answer)
+      = link_to 'Delete answer', answer_path(answer), method: :delete
+      = link_to 'Edit', '', class: 'edit-answer-link', data: { answer_id: answer.id }
+    br/
 

@@ -16,4 +16,4 @@ p= @question.content
 
 -if @question.answers.any?
   .answers
-    = render @question.answers
+    = render @question.answers.order(created_at: :asc)

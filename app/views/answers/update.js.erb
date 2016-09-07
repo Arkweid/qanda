@@ -3,6 +3,6 @@
     $('.answer_errors').html('<%= j message %>');
   <% end %>
 <% else %>
-  $('.answers').html('<%= j render @question.answers %>');
   $('.answer_errors').html('');
+  $('#answer-<%= @answer.id %>').replaceWith('<%= j render @answer %>').show();
 <% end %>
