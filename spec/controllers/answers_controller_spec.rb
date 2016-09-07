@@ -89,6 +89,6 @@ RSpec.describe AnswersController, type: :controller do
     it 'render update template' do
       patch :update, id: answer, question_id: question, answer: attributes_for(:answer), format: :js
       expect(response).to render_template :update
-    end    
+    end
   end
 end

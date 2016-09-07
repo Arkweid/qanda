@@ -12,7 +12,7 @@ feature 'Create answer', '
   describe 'Authenticated user' do
     before do
       sign_in(user)
-      visit question_path(question)    
+      visit question_path(question)
     end
 
     scenario 'Authenticated user add answer', js: true do
@@ -28,7 +28,7 @@ feature 'Create answer', '
       click_on 'Add answer'
 
       expect(page).to have_content 'Content is too short'
-    end    
+    end
   end
 
   scenario 'Non-authenticated user add answer' do

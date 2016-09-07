@@ -3,8 +3,7 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $ ->
-  $('.edit-answer-link').click (e) ->
+  $('body').on 'click', 'a.edit-answer-link', (e) ->
     e.preventDefault();
-    $(this).hide();
     answer_id = $(this).data('answerId')
-    $('form#edit-answer-' + answer_id).show()
+    $('form#edit-answer-' + answer_id).toggle()

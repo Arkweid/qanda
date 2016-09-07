@@ -5,11 +5,11 @@ feature 'Answer editing', '
   As a author of answer
   I want to be able edit my answer
 ' do
-  
-  given(:user){ create :user }
-  given(:another_user){ create :user }
-  given!(:question){ create :question, user: user }
-  given!(:answer){ create :answer, question: question, user: user }
+
+  given(:user) { create :user }
+  given(:another_user) { create :user }
+  given!(:question) { create :question, user: user }
+  given!(:answer) { create :answer, question: question, user: user }
 
   scenario 'Author edit answer', js: true do
     sign_in user
@@ -23,7 +23,7 @@ feature 'Answer editing', '
 
       expect(page).to_not have_content answer.content
       expect(page).to have_content 'edited answer'
-      expect(page).to_not have_selector 'textarea'      
+      expect(page).to_not have_selector 'textarea'
     end
   end
 
@@ -36,8 +36,6 @@ feature 'Answer editing', '
       expect(page).to_not have_link 'Edit'
     end
   end
-
-
 
   scenario 'Non-authenticated guest don`t see link to edit' do
     visit question_path(question)
