@@ -43,13 +43,13 @@ RSpec.describe AnswersController, type: :controller do
       before { answer }
 
       it 'delete answer from question' do
-        expect { delete :destroy, id: answer }
+        expect { delete :destroy, id: answer, format: :js }
           .to change(question.answers, :count).by(-1)
       end
 
       it 'redirect to questions#show' do
-        delete :destroy, id: answer
-        expect(response).to redirect_to question
+        delete :destroy, id: answer, format: :js
+        expect(response).to render_template :destroy
       end
     end
 
@@ -58,37 +58,51 @@ RSpec.describe AnswersController, type: :controller do
       let!(:another_answer) { create :answer, question: question, user: another_user }
 
       it 'delete answer from question' do
-        expect { delete :destroy, id: another_answer }
+        expect { delete :destroy, id: another_answer, format: :js }
           .to_not change(Answer, :count)
       end
 
       it 'redirect to question#show' do
-        delete :destroy, id: another_answer
-        expect(response).to render_template 'questions/show'
+        delete :destroy, id: another_answer, format: :js
+        expect(response).to render_template :destroy
       end
     end
   end
 
   describe 'PATCH #update' do
-    it 'assigns a requested answer to the variable @answer' do
-      patch :update, id: answer, question_id: question, answer: attributes_for(:answer), format: :js
-      expect(assigns(:answer)).to eq answer
+    context 'User is owner' do
+      it 'changes answer attribute' do
+        patch :update, id: answer, answer: { content: 'new content' }, format: :js
+        answer.reload
+        expect(answer.content).to eq 'new content'
+      end
     end
 
-    it 'assigns a question to the variable @question' do
-      patch :update, id: answer, question_id: question, answer: attributes_for(:answer), format: :js
-      expect(assigns(:question)).to eq question
+    context 'User not owner' do
+      let(:another_user) { create(:user) }
+      let!(:another_answer) { create :answer, question: question, user: another_user }
+
+      it 'Not owner changes answer attribute' do
+        patch :update, id: another_answer, answer: { content: 'new content' }, format: :js
+        answer.reload
+        expect(answer.content).to eq 'Forty two. That`s it. That`s all there is.'
+      end
     end
 
-    it 'changes answer attribute' do
-      patch :update, id: answer, question_id: question, answer: { content: 'new content' }, format: :js
-      answer.reload
-      expect(answer.content).to eq 'new content'
-    end
+    context 'Check assigns' do
+      before { patch :update, id: answer, answer: attributes_for(:answer), format: :js }
 
-    it 'render update template' do
-      patch :update, id: answer, question_id: question, answer: attributes_for(:answer), format: :js
-      expect(response).to render_template :update
+      it 'assigns a requested answer to the variable @answer' do
+        expect(assigns(:answer)).to eq answer
+      end
+
+      it 'assigns a question to the variable @question' do
+        expect(assigns(:question)).to eq question
+      end
+
+      it 'render update template' do
+        expect(response).to render_template :update
+      end
     end
   end
 end

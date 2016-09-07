@@ -11,14 +11,14 @@ I want to delete my question
   given(:question) { create :question, user: user }
   given!(:answer) { create :answer, question: question, user: user }
 
-  scenario 'Owner try to delete answer' do
+  scenario 'Owner try to delete answer', js: true do
     sign_in(user)
 
     visit question_path(question)
-    expect(page).to have_content 'Forty two. That`s it. That`s all there is.'
+    expect(page).to have_content answer.content
 
     click_on 'Delete answer'
-    expect(page).to_not have_content 'Forty two. That`s it. That`s all there is.'
+    expect(page).to_not have_content answer.content
   end
 
   scenario 'Not owner try to delete answer' do
@@ -26,7 +26,7 @@ I want to delete my question
 
     visit question_path(question)
 
-    expect(page).to have_content 'Forty two. That`s it. That`s all there is.'
+    expect(page).to have_content answer.content
     expect(page).to_not have_content 'Delete question'
   end
 end

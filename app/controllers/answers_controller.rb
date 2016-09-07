@@ -9,7 +9,12 @@ class AnswersController < ApplicationController
   def update
     @answer = Answer.find(params[:id])
     @question = @answer.question
-    @answer.update(answer_params)
+    if current_user.author_of?(@answer)
+      @answer.update(answer_params)
+      flash[:success] = 'Your answer is successfully updated'
+    else
+      flash.now[:error] = 'You not owner of this answer'
+    end
   end
 
   def destroy
@@ -18,10 +23,10 @@ class AnswersController < ApplicationController
     if current_user.author_of?(@answer)
       @answer.destroy
       flash[:success] = 'Your answer is successfully deleted.'
-      redirect_to @question
+      #redirect_to @question
     else
       flash.now[:error] = 'You not owner of this answer'
-      render 'questions/show'
+      #render 'questions/show'
     end
   end
 
