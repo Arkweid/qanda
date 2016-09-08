@@ -47,7 +47,7 @@ RSpec.describe AnswersController, type: :controller do
           .to change(question.answers, :count).by(-1)
       end
 
-      it 'redirect to questions#show' do
+      it 'render destroy template' do
         delete :destroy, id: answer, format: :js
         expect(response).to render_template :destroy
       end
@@ -62,7 +62,7 @@ RSpec.describe AnswersController, type: :controller do
           .to_not change(Answer, :count)
       end
 
-      it 'redirect to question#show' do
+      it 'render destroy template' do
         delete :destroy, id: another_answer, format: :js
         expect(response).to render_template :destroy
       end
