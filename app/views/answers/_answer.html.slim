@@ -1,5 +1,5 @@
 - if answer.persisted?
-  li id="answer-#{answer.id}"
+  li id="answer-#{answer.id}" class=(answer.best ? 'best-answer' : '')
     p = answer.content
 
     - if user_signed_in?
@@ -12,4 +12,6 @@
     - if user_signed_in? && current_user.author_of?(answer)
       = link_to 'Delete answer', answer_path(answer), method: :delete, remote: true
       = link_to 'Edit', '', class: 'edit-answer-link', data: { answer_id: answer.id }
+    - if user_signed_in? && current_user.author_of?(@question)
+      = link_to 'Mark of best', best_answer_path(answer), class: 'best-answer-link',  method: :patch, remote: true
     br/

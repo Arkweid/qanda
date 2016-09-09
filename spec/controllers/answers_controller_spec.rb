@@ -105,4 +105,46 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
   end
+
+  describe 'PATCH #best' do
+    context 'Question owner' do
+      before do
+        patch :best, id: answer, format: :js
+        answer.reload
+      end
+
+      it 'assigns the requested answer_id to @answer' do
+        expect(assigns(:answer)).to eq answer
+      end
+
+      it 'set the best answer' do
+        expect(answer.best).to eq true
+      end
+
+      it 'switch answer to not be best' do
+        patch :best, id: answer, format: :js
+        answer.reload
+
+        expect(answer.best).to eq false
+      end
+    end
+
+    context 'Not question owner' do
+      let!(:another_user) { create(:user) }
+
+      before do
+        question.update_attribute(:user, another_user)
+        patch :best, id: answer, format: :js
+        answer.reload
+      end
+
+      it 'assigns the requested answer_id to @answer' do
+        expect(assigns(:answer)).to eq answer
+      end
+
+      it 'try to set the best answer' do
+        expect(answer.best).to eq false
+      end
+    end
+  end
 end

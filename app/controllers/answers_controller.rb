@@ -1,5 +1,6 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
+  before_action :load_answer, except: [:create]
 
   def create
     @question = Question.find(params[:question_id])
@@ -7,7 +8,6 @@ class AnswersController < ApplicationController
   end
 
   def update
-    @answer = Answer.find(params[:id])
     @question = @answer.question
     if current_user.author_of?(@answer)
       @answer.update(answer_params)
@@ -18,15 +18,21 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    @answer = Answer.find(params[:id])
     @question = @answer.question
     if current_user.author_of?(@answer)
       @answer.destroy
       flash[:success] = 'Your answer is successfully deleted.'
-      #redirect_to @question
     else
       flash.now[:error] = 'You not owner of this answer'
-      #render 'questions/show'
+    end
+  end
+
+  def best
+    if current_user.author_of?(@answer.question)
+      @answer.switch_best
+      @answer.reload
+    else
+      flash[:error] = 'You not question owner'
     end
   end
 
@@ -34,5 +40,9 @@ class AnswersController < ApplicationController
 
   def answer_params
     params.require(:answer).permit(:content)
+  end
+
+  def load_answer
+    @answer = Answer.find(params[:id])
   end
 end
