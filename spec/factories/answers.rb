@@ -1,5 +1,6 @@
 FactoryGirl.define do
   factory :answer do
+    user
     question
     content 'Forty two. That`s it. That`s all there is.'
   end

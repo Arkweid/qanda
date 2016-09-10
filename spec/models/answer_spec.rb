@@ -9,15 +9,28 @@ RSpec.describe Answer, type: :model do
   it { should validate_presence_of :content }
   it { should validate_length_of(:content).is_at_least(10).is_at_most(1000) }
 
-  describe 'Check answer model methods' do
-    let(:user) { create :user }
-    let(:question) { create :question, user: user }
-    let(:answer) { create :answer, question: question, user: user }
+  describe '#switch_best' do
+    let(:question) { create :question }
+    let(:answer) { create :answer, question: question }
+    let(:answer1) { create :answer, question: question }
 
-    it '.switch_best toggle answer.best' do
+    it 'default value false' do
       expect(answer.best).to eq false
+    end
+
+    it 'switch best value' do
       answer.switch_best
+
       expect(answer.best).to eq true
+    end
+
+    it 'old best must be false, when marked other' do
+      answer.switch_best
+      answer1.switch_best
+      answer.reload
+
+      expect(answer.best).to eq false
+      expect(answer1.best).to eq true
     end
   end
 end
