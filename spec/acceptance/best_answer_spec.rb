@@ -32,7 +32,7 @@ feature 'Best answer', '
   describe 'Question owner' do
     before { sign_in(user) }
 
-    scenario 'mark answer as best', js: true do
+    scenario 'see marked answer first', js: true do
       visit question_path(question)
 
       within("#answer-#{answer2.id}") do
@@ -42,6 +42,7 @@ feature 'Best answer', '
       within('.answers') do
         expect(page).to have_css('.best-answer', count: 1)
         expect(page).to have_css("li#answer-#{answer2.id}.best-answer")
+        expect(page.first(:css, 'li')[:class].include?('best-answer')).to eq true
       end
     end
 
