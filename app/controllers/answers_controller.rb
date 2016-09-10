@@ -30,7 +30,6 @@ class AnswersController < ApplicationController
   def best
     if current_user.author_of?(@answer.question)
       @answer.switch_best
-      @answer.reload
     else
       flash[:error] = 'You not question owner'
     end

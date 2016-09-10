@@ -1,4 +1,4 @@
-<% unless flash[:error].present? %>
+<% if flash[:error].blank? %>
   <% if @answer.best %>
     $('li').removeClass('best-answer');
   <% end %>

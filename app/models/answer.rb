@@ -7,7 +7,9 @@ class Answer < ActiveRecord::Base
   validates :content, length: { in: 10..1000 }
 
   def switch_best
-    Answer.where(question_id: question.id).update_all(best: false) unless best
-    toggle!(:best)
+    Answer.transaction do
+      Answer.where(question_id: question.id).update_all(best: false) unless best
+      toggle!(:best)
+    end
   end
 end

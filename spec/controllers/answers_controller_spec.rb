@@ -107,6 +107,14 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'PATCH #best' do
+    context 'check action methods' do
+      it '.switch_best toggle answer.best' do
+        expect(answer.best).to eq false
+        answer.switch_best
+        expect(answer.best).to eq true
+      end
+    end
+
     context 'Question owner' do
       before do
         patch :best, id: answer, format: :js
