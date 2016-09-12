@@ -10,7 +10,7 @@ feature 'Best answer', '
   given(:another_user) { create :user }
   given(:question) { create :question, user: user }
   given!(:answer1) { create(:answer, question: question, user: user) }
-  given!(:answer2) { create(:answer, question: question, user: user) }
+  given!(:answer2) { create(:answer, content: 'long time ago in a far galaxy', question: question, user: user) }
 
   scenario 'Unauthenticated user try set the best answer' do
     visit question_path(question)
@@ -39,10 +39,8 @@ feature 'Best answer', '
         click_on 'Mark of best'
       end
 
-      within('.answers') do
-        expect(page).to have_css('.best-answer', count: 1)
-        expect(page).to have_css("li#answer-#{answer2.id}.best-answer")
-        expect(page.first(:css, 'li')[:class].include?('best-answer')).to eq true
+      within ".answers li:first-child" do
+        expect(page).to have_content('long time ago in a far galaxy')
       end
     end
 
