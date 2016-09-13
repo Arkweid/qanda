@@ -7,4 +7,6 @@ class Question < ActiveRecord::Base
 
   validates :content, length: { in: 5..1000 }
   validates :title, length: { in: 5..50 }
+
+  accepts_nested_attributes_for :attachments
 end
