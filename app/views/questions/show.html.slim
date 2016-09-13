@@ -4,6 +4,11 @@ p
 
 p= @question.title
 p= @question.content
+p Attachments:
+ul
+  - @question.attachments.each do |a|
+    li = a.file.file.filename
+
 
 .answer_errors
   = render 'questions/answer_errors'
