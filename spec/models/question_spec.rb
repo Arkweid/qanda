@@ -11,5 +11,5 @@ RSpec.describe Question, type: :model do
   it { should validate_length_of(:title).is_at_least(5).is_at_most(50) }
   it { should validate_length_of(:content).is_at_least(5).is_at_most(1000) }
 
-  it { should accept_nested_attributes_for :attachments}
+  it { should accept_nested_attributes_for :attachments }
 end
