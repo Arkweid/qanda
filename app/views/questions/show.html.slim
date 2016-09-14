@@ -17,6 +17,9 @@ ul
   = form_for([@question, @answer], remote: true) do |f|
     = f.label :content
     = f.text_field :content
+    p= f.fields_for :attachments do |a|
+      = a.label :file
+      = a.file_field :file
     = f.submit 'Add answer'
 
 -if @question.answers.any?

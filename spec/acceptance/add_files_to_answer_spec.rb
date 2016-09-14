@@ -15,9 +15,9 @@ feature 'Add files to answer', '
   end
 
   scenario 'User adds file to answer', js: true do
-    fill_in 'Your answer', with: 'My answer'
+    fill_in 'Content', with: 'My answer with file'
     attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
-    click_on 'Create'
+    click_on 'Add answer'
 
     within '.answers' do
       expect(page).to have_link 'spec_helper.rb', href: '/uploads/attachment/file/1/spec_helper.rb'
