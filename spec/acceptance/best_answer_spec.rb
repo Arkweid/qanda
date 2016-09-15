@@ -39,7 +39,7 @@ feature 'Best answer', '
         click_on 'Mark of best'
       end
 
-      within ".answers li:first-child" do
+      within '.answers li:first-child' do
         expect(page).to have_content('long time ago in a far galaxy')
       end
     end

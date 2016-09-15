@@ -1,6 +1,6 @@
 class Question < ActiveRecord::Base
   include AdditionalMethods
-  
+
   has_many :answers, dependent: :destroy
   has_many :attachments, as: :attachable, dependent: :destroy
   belongs_to :user

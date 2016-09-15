@@ -5,7 +5,7 @@ feature 'Add files to question', '
   As an question`s author
   I`d like to be able to attach files
 ' do
-  
+
   given(:user) { create :user }
 
   background do
@@ -37,5 +37,5 @@ feature 'Add files to question', '
 
     expect(page).to have_link 'spec_helper.rb', href: '/uploads/attachment/file/2/spec_helper.rb'
     expect(page).to have_link 'rails_helper.rb', href: '/uploads/attachment/file/3/rails_helper.rb'
-  end  
+  end
 end
