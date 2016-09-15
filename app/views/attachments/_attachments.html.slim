@@ -1,3 +1,7 @@
 - if object.attachments.any?
-  - object.attachments.each do |a|
-    = link_to(a.file.identifier, a.file.url)
+  - object.attachments.each do |attachment|
+    li id="file-#{attachment.id}"
+      = link_to(attachment.file.identifier, attachment.file.url)
+      - if user_signed_in? && current_user.author_of?(object)
+        .delete-file-link
+          = link_to 'Delete file', attachment_path(attachment), method: :delete, remote: true

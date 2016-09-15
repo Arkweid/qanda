@@ -1,9 +1,8 @@
 - if answer.persisted?
   li id="answer-#{answer.id}" class=(answer.best ? 'best-answer' : '')
     p = answer.content
-    ul
-      - answer.attachments.each do |a|
-        li= link_to a.file.identifier, a.file.url
+
+    = render partial: 'attachments/attachments', locals: { object: answer }
 
     - if user_signed_in?
       p

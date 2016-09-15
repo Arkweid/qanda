@@ -1,0 +1,3 @@
+<% if flash[:error].blank? %>
+  $('#file-<%= @attachment.id %>').remove();
+<% end %>
