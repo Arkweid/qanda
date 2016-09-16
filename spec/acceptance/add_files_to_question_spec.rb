@@ -20,7 +20,7 @@ feature 'Add files to question', '
       attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
       click_on 'Create'
 
-      expect(page).to have_link 'spec_helper.rb'#, href: '/uploads/attachment/file/1/spec_helper.rb'
+      expect(page).to have_link 'spec_helper.rb', href: '/uploads/attachment/file/1/spec_helper.rb'
     end
 
     scenario 'add several files when asks question', js: true do
@@ -34,8 +34,8 @@ feature 'Add files to question', '
       end
       click_on 'Create'
 
-      expect(page).to have_link 'spec_helper.rb'#, href: "/uploads/attachment/file/3/spec_helper.rb"
-      expect(page).to have_link 'rails_helper.rb'#, href: "/uploads/attachment/file/4/rails_helper.rb"
+      expect(page).to have_link 'spec_helper.rb', href: '/uploads/attachment/file/3/spec_helper.rb'
+      expect(page).to have_link 'rails_helper.rb', href: '/uploads/attachment/file/4/rails_helper.rb'
     end
   end
 

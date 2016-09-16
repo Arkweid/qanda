@@ -16,5 +16,5 @@ class Answer < ActiveRecord::Base
       Answer.where(question_id: question.id).update_all(best: false) unless best
       toggle!(:best)
     end
-  end  
+  end
 end
