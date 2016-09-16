@@ -17,7 +17,7 @@ p= @question.content
     = f.fields_for :attachments do |attachment|
       = render 'attachment_fields', f: attachment
     .links
-      = link_to_add_association 'add file', f, :attachments      
+      = link_to_add_association 'add file', f, :attachments
     = f.submit 'Add answer'
 
 

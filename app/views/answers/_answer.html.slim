@@ -1,14 +1,18 @@
 - if answer.persisted?
   li id="answer-#{answer.id}" class=(answer.best ? 'best-answer' : '')
     p = answer.content
-
-    = render partial: 'attachments/attachments', locals: { object: answer }
+    ul
+      = render partial: 'attachments/attachments', locals: { object: answer }
 
     - if user_signed_in?
       p
         = form_for answer, remote: true, html: { id: "edit-answer-#{answer.id}"} do |f|
           = f.label :content, 'Answer', class: 'hidden'
           = f.text_area :content
+          = f.fields_for :attachments do |attachment|
+            = render 'attachment_fields', f: attachment
+          .links
+            = link_to_add_association 'add file', f, :attachments
           = f.submit 'Save'
 
     - if user_signed_in? && current_user.author_of?(answer)

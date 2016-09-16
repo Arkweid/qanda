@@ -4,5 +4,5 @@
   <% end %>
 <% else %>
   $('.answer_errors').html('');
-  $('#answer-<%= @answer.id %>').replaceWith('<%= j render @answer %>').show();
+  $('#answer-<%= @answer.id %>').replaceWith('<%= j render @answer %>')
 <% end %>
