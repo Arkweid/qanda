@@ -7,6 +7,10 @@ p= @question.content
 
 = render partial: 'attachments/attachments', locals: { object: @question }
 
+- if user_signed_in?
+  .question_votes
+    = render partial: 'votes/votes', locals: { votable: @question }
+
 .answer_errors
   = render 'questions/answer_errors'
 
