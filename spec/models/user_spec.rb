@@ -7,7 +7,6 @@ RSpec.describe User, type: :model do
   it { should validate_presence_of :email }
   it { should validate_presence_of :password }
 
-
   let(:user) { create :user }
   let(:another_user) { create :user }
   let(:question) { create :question, user: user }

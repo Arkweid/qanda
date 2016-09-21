@@ -1,4 +1,5 @@
 require 'rails_helper'
+require Rails.root.join('spec/controllers/concerns/voted_spec')
 
 RSpec.describe AnswersController, type: :controller do
   sign_in_user
@@ -147,4 +148,6 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
   end
+
+  it_behaves_like 'voted', 'answer'
 end
