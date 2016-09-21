@@ -4,6 +4,7 @@
     ul
       = render partial: 'attachments/attachments', locals: { object: answer }
 
+
     - if user_signed_in?
       p
         = form_for answer, remote: true, html: { id: "edit-answer-#{answer.id}"} do |f|
@@ -15,9 +16,11 @@
             = link_to_add_association 'add file', f, :attachments
           = f.submit 'Save'
 
-    - if user_signed_in? && current_user.author_of?(answer)
-      = link_to 'Delete answer', answer_path(answer), method: :delete, remote: true
-      = link_to 'Edit', '', class: 'edit-answer-link', data: { answer_id: answer.id }
-    - if user_signed_in? && current_user.author_of?(@question)
-      = link_to 'Mark of best', best_answer_path(answer), class: 'best-answer-link',  method: :patch, remote: true
-    br/
+      - if current_user.author_of?(answer)
+        = link_to 'Delete answer', answer_path(answer), method: :delete, remote: true
+        = link_to 'Edit', '', class: 'edit-answer-link', data: { answer_id: answer.id }
+      - else
+        = render partial: 'votes/votes', locals: { votable: answer }
+      - if current_user.author_of?(@question)
+        = link_to 'Mark of best', best_answer_path(answer), class: 'best-answer-link',  method: :patch, remote: true
+      br/

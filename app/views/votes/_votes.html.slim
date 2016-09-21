@@ -1,12 +1,13 @@
-.total-vote
-  p Total votes: 
-  = votable.total
-.vote-links
-  ul
-    - if !current_user.voted?(votable) 
-      li= link_to 'like', [:like, votable], method: :post, remote: true
-      li= link_to 'dislike', [:dislike, votable], method: :post, remote: true
-      
-    - if current_user.voted?(votable) 
-      li= link_to 'change vote', [:change_vote, votable], method: :patch, remote: true
-      li= link_to 'cancel vote', [:cancel_vote, votable], method: :delete, remote: true
+.voting
+  .votable-total id="votable-total-#{votable.id}"
+    = votable.total
+
+  - if !current_user.author_of?(votable)  
+      ul id="votable-already-links-#{votable.id}" class=(current_user.voted?(votable) ? '' : 'hidden')
+        li= link_to 'change vote', [:change_vote, votable], method: :patch, remote: true
+        li= link_to 'cancel vote', [:cancel_vote, votable], method: :delete, remote: true
+          
+      ul id="votable-not-yet-links-#{votable.id}" class=(current_user.voted?(votable) ? 'hidden' : '')
+        li= link_to 'like', [:like, votable], method: :post, remote: true
+        li= link_to 'dislike', [:dislike, votable], method: :post, remote: true
+        
