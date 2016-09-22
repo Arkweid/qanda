@@ -7,7 +7,7 @@ p= @question.content
 
 = render partial: 'attachments/attachments', locals: { object: @question }
 
-- if user_signed_in?
+- if user_signed_in? && !current_user.author_of?(@question)
   .question_votes
     = render partial: 'votes/votes', locals: { votable: @question }
 
