@@ -1,6 +1,7 @@
 require 'rails_helper'
 require Rails.root.join('spec/models/concerns/votable_spec')
 require Rails.root.join('spec/models/concerns/attachable_spec')
+require Rails.root.join('spec/models/concerns/commentable_spec')
 
 RSpec.describe Question, type: :model do
   it { should have_many(:answers).dependent(:destroy) }
@@ -8,6 +9,7 @@ RSpec.describe Question, type: :model do
 
   it_behaves_like 'votable'
   it_behaves_like 'attachable'
+  it_behaves_like 'commentable'
 
   it { should validate_presence_of :user_id }
   it { should validate_presence_of :title }

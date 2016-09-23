@@ -12,7 +12,9 @@ Rails.application.routes.draw do
   end
 
   resources :questions, shallow: true, concerns: :votable do
+    resources :comments, shallow: true, only: [:create, :update, :destroy], defaults: { commentable_type: 'question' }
     resources :answers, shallow: true, concerns: :votable do
+      resources :comments, shallow: true, only: [:create, :update, :destroy], defaults: { commentable_type: 'answer' }
       patch :best, on: :member
     end
   end
