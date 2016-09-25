@@ -3,16 +3,17 @@ class CommentsController < ApplicationController
   before_action :load_commentable, only: [:create]
   before_action :load_comment, except: [:create]
 
-  respond_to :js
+  #respond_to :js
 
   def create
-    respond_with(@comment = @commentable.comments.create(comment_params))
+  #  respond_with(@comment = @commentable.comments.create(comment_params))
+    @comment = @commentable.comments.create(comment_params)
   end
 
   def update
     if current_user.author_of?(@comment)
       @comment.update(comment_params)
-      respond_with(@comment)
+  #    respond_with(@comment)
     else
       flash.now[:error] = 'You cannot change comments written by others!'
     end
@@ -20,7 +21,8 @@ class CommentsController < ApplicationController
 
   def destroy
     if current_user.author_of?(@comment)
-      respond_with(@comment.destroy)
+#      respond_with(@comment.destroy)
+      @comment.destroy
     else
       flash.now[:error] = 'You cannot change comments written by others!'
     end

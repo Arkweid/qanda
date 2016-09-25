@@ -1,0 +1,8 @@
+<% if @comment.errors.present? %>
+  <% @comment.errors.full_messages.each do |message| %>
+    $('.comment_errors').html('<%= j message %>');
+  <% end %>
+<% else %>
+  $('.comment_errors').html('');
+  $('#comment-<%= @comment.id %>').replaceWith('<%= j render @comment %>')
+<% end %>

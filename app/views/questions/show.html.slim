@@ -5,11 +5,20 @@ p
 h1= @question.title
 p= @question.content
 
+hr
+
 = render partial: 'attachments/attachments', locals: { object: @question }
 
-- if user_signed_in? && !current_user.author_of?(@question)
-  .question_votes
-    = render partial: 'votes/votes', locals: { votable: @question }
+hr
+
+.question_votes
+  = render partial: 'votes/votes', locals: { votable: @question }
+
+hr
+
+= render partial: 'comments/comments', locals: { commentable: @question }
+
+hr
 
 .answer_errors
   = render 'questions/answer_errors'
@@ -24,7 +33,8 @@ p= @question.content
       = link_to_add_association 'add file', f, :attachments
     = f.submit 'Add answer'
 
+hr
 
--if @question.answers.any?
+- if @question.answers.any?
   .answers
     = render @question.answers.order(best: :desc, created_at: :asc)
