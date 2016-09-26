@@ -1,5 +1,5 @@
 .voting
-  .votable-total id="votable-total-#{votable.id}"
+  .votable-total id="votable-#{votable.class.name.downcase}-total-#{votable.id}"
     = votable.total
 
   - if user_signed_in? && !current_user.author_of?(votable)  

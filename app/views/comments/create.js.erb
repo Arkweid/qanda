@@ -1,10 +1,12 @@
 <% if @comment.errors.present? %>
+  var parentErrorSelector = '<%= @comment.commentable_type.downcase %>';
   <% @comment.errors.full_messages.each do |message| %>
-    $('.comment_errors').html('<%= j message %>');
+    $('#new-comment-errors-for-' + parentErrorSelector).html('<%= j message %>');
   <% end %>
 <% else %>
   var parentSelector = '<%= @comment.commentable_type.downcase %>-<%= @comment.commentable_id %>';
   $('.comments#for-' + parentSelector).append('<%= j render @comment %>');  
-  $('form#add-comment-' + parentSelector).hide()
+  $('form#add-comment-' + parentSelector).hide();
   $('.comment_errors').html('');
 <% end %>
+

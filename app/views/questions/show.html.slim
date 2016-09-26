@@ -1,22 +1,23 @@
-p
-  - if user_signed_in? && current_user.author_of?(@question)
-    = link_to('Delete question', question_path(@question), method: :delete)
+.question
+  h1= @question.title
+  p= @question.content
 
-h1= @question.title
-p= @question.content
+  p
+    - if user_signed_in? && current_user.author_of?(@question)
+      = link_to('Delete question', question_path(@question), method: :delete)
 
-hr
+  hr
 
-= render partial: 'attachments/attachments', locals: { object: @question }
+  = render partial: 'attachments/attachments', locals: { object: @question }
 
-hr
+  hr
 
-.question_votes
-  = render partial: 'votes/votes', locals: { votable: @question }
+  .question_votes
+    = render partial: 'votes/votes', locals: { votable: @question }
 
-hr
+  hr
 
-= render partial: 'comments/comments', locals: { commentable: @question }
+  = render partial: 'comments/comments', locals: { commentable: @question }
 
 hr
 

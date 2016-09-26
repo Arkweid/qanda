@@ -1,10 +1,11 @@
 .comment id="comment-#{ comment.id }"
   ul
     li = comment.content
-    li = link_to 'Delete comment', comment_path(comment), method: :delete, remote: true
-    li = link_to 'Edit', '', class: 'edit-comment-link', data: { comment_id: comment.id }
+    - if user_signed_in? && current_user.author_of?(comment)
+      li = link_to 'Delete comment', comment_path(comment), method: :delete, remote: true
+      li = link_to 'Edit', '', class: 'edit-comment-link', data: { comment_id: comment.id }
 
-  = form_for comment, remote: true, html: { id: "edit-comment-#{comment.id}"} do |f|
-    = f.label :content, 'Comment content', class: 'hidden'
-    = f.text_area :content
-    = f.submit 'Update comment'
+      = form_for comment, remote: true, html: { id: "edit-comment-#{comment.id}"} do |f|
+        = f.label :content, 'Comment content', class: 'hidden'
+        = f.text_area :content
+        = f.submit 'Update comment'
