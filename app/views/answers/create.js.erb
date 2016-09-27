@@ -3,7 +3,13 @@
     $('.answer_errors').html('<%= j message %>');
   <% end %>
 <% else %>
-  $('.answers').append('<%= j render @answer %>');  
+  var answerID = '<%= @answer.id %>'
+
+  <% publish_to "/questions/#{@question.id}/answers" do %>
+    $('.answers').append('<%= j render partial: 'answers/answer_pub_content', locals: { answer: @answer } %>');
+  <% end %>
+
+  $('#answer-' + answerID).append('<%= j render partial: 'answers/answer_links', locals: { answer: @answer } %>');
   $('#answer_content').val('');
   $('.answer_errors').html('');
 <% end %>

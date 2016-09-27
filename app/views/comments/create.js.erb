@@ -4,9 +4,22 @@
     $('#new-comment-errors-for-' + parentErrorSelector).html('<%= j message %>');
   <% end %>
 <% else %>
+  var commentID = '<%= @comment.id %>';
   var parentSelector = '<%= @comment.commentable_type.downcase %>-<%= @comment.commentable_id %>';
-  $('.comments#for-' + parentSelector).append('<%= j render @comment %>');  
+
+  <% publish_to "/questions/#{@comment.commentable_id}/comments" do %>
+    var parentSelector = '<%= @comment.commentable_type.downcase %>-<%= @comment.commentable_id %>';
+    $('.comments#for-' + parentSelector).append('<%= j render partial: 'comments/comment_pub_content', locals: { comment: @comment } %>');
+  <% end %>
+
+  $('#comment-' + commentID).append('<%= j render partial: 'comments/comment_links', locals: { comment: @comment } %>');
   $('form#add-comment-' + parentSelector).hide();
   $('.comment_errors').html('');
 <% end %>
+
+
+
+
+
+
 
