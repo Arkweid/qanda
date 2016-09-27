@@ -1,8 +1,11 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :load_question, only: [:show, :edit, :update, :destroy]
+  after_action -> { publish_question(params[:action]) }, only: [:create]
 
   include Voted
+
+  respond_to :json, only: :create
 
   def index
     @questions = Question.all
@@ -61,4 +64,8 @@ class QuestionsController < ApplicationController
   def question_params
     params.require(:question).permit(:title, :content, attachments_attributes: [:file, :id, :_destroy])
   end
+
+  def publish_question(action)
+    PrivatePub.publish_to("/questions", question: @question.to_json, action: action) if @question.valid?
+  end  
 end

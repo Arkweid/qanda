@@ -1,0 +1,5 @@
+<% if @question.errors.blank? %>
+  <% publish_to "/questions/index" do %>
+    $('.questions').append('<%= j render partial: 'questions/question_pub_content', locals: { question: @question } %>');
+  <% end %>
+<% end %>
