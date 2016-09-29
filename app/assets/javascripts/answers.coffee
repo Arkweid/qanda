@@ -7,3 +7,4 @@ $ ->
     e.preventDefault();
     answer_id = $(this).data('answerId')
     $('form#edit-answer-' + answer_id).toggle()
+    

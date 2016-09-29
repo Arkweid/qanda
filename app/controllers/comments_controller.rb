@@ -2,30 +2,21 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!
   before_action :load_commentable, only: [:create]
   before_action :load_comment, except: [:create]
+  #after_action :publish_comment, only: [:create]
 
-  # respond_to :js
+  respond_to :js, :json
 
   def create
-    # respond_with(@comment = @commentable.comments.create(comment_params))
     @comment = @commentable.comments.create(comment_params)
+    respond_with @comment
   end
 
   def update
-    if current_user.author_of?(@comment)
-      @comment.update(comment_params)
-    #    respond_with(@comment)
-    else
-      flash.now[:error] = 'You cannot change comments written by others!'
-    end
+    respond_with(@comment.update(comment_params)) if current_user.author_of?(@comment)
   end
 
-  def destroy
-    if current_user.author_of?(@comment)
-      #      respond_with(@comment.destroy)
-      @comment.destroy
-    else
-      flash.now[:error] = 'You cannot change comments written by others!'
-    end
+  def destroy  
+    respond_with(@comment.destroy) if current_user.author_of?(@comment)
   end
 
   private
@@ -45,4 +36,8 @@ class CommentsController < ApplicationController
   def comment_params
     params.require(:comment).permit(:content).merge(user: current_user)
   end
+
+  def publish_comment
+    PrivatePub.publish_to("/questions/#{ question_id(@comment.commentable) }/comments", comment: @comment.to_json) if @comment.valid?
+  end  
 end

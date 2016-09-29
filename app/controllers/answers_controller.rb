@@ -1,49 +1,46 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :load_answer, except: [:create]
+  before_action :load_question, only: [:create]
+  #after_action :publish_answer, only: [:create]
 
   include Voted
 
+  respond_to :js, only: [:create, :update, :destroy, :best]
+
   def create
-    @question = Question.find(params[:question_id])
-    @answer = @question.answers.create(answer_params.merge(user: current_user))
+    @answer = @question.answers.create(answer_params)
+    respond_with @answer
   end
 
   def update
-    @question = @answer.question
-    if current_user.author_of?(@answer)
-      @answer.update(answer_params)
-      flash[:success] = 'Your answer is successfully updated'
-    else
-      flash.now[:error] = 'You not owner of this answer'
-    end
+    @answer.update(answer_params) if current_user.author_of?(@answer)
+    respond_with @answer
   end
 
   def destroy
-    @question = @answer.question
-    if current_user.author_of?(@answer)
-      @answer.destroy
-      flash[:success] = 'Your answer is successfully deleted.'
-    else
-      flash.now[:error] = 'You not owner of this answer'
-    end
+    respond_with(@answer.destroy) if current_user.author_of?(@answer)
   end
 
   def best
-    if current_user.author_of?(@answer.question)
-      @answer.switch_best
-    else
-      flash[:error] = 'You not question owner'
-    end
+    respond_with(@answer.switch_best) if current_user.author_of?(@answer.question)
   end
 
   private
 
   def answer_params
-    params.require(:answer).permit(:content, attachments_attributes: [:file])
+    params.require(:answer).permit(:content, attachments_attributes: [:file]).merge(user: current_user)
+  end
+
+  def load_question
+    @question = Question.find(params[:question_id])
   end
 
   def load_answer
     @answer = Answer.find(params[:id])
   end
+
+  def publish_answer
+    PrivatePub.publish_to("/questions/#{ @answer.question_id }/answers", answer: @answer.to_json) if @answer.valid?
+  end  
 end

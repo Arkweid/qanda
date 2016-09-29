@@ -16,7 +16,7 @@ I want to delete my question
     visit question_path(question)
     click_on 'Delete question'
 
-    expect(page).to have_content 'Question successfully deleted.'
+    expect(page).to have_content 'Question was successfully destroyed.'
     expect(page).to_not have_content 'Test title'
     expect(current_path).to eq questions_path
   end

@@ -1,5 +1,5 @@
 .comment id="comment-#{ comment.id }"
-
+  ul
     li = comment.content
     - if user_signed_in? && current_user.author_of?(comment)
       li = link_to 'Delete comment', comment_path(comment), method: :delete, remote: true

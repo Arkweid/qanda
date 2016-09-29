@@ -15,6 +15,7 @@ gem 'remotipart'
 gem 'cocoon'
 gem 'private_pub'
 gem 'thin'
+gem 'responders', '~> 2.0'
 
 group :development, :test do
   gem 'rspec-rails'

@@ -1,56 +1,42 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :load_question, only: [:show, :edit, :update, :destroy]
-  after_action -> { publish_question(params[:action]) }, only: [:create]
+  before_action :build_answer, only: [:show]
+  #after_action :publish_question, only: [:create]
 
   include Voted
-
-  respond_to :json, only: :create
+  
+  respond_to :json
 
   def index
-    @questions = Question.all
+    respond_with(@questions = Question.all)
   end
 
   def show
-    @answer = @question.answers.build
-    @answer.attachments.build
-    @answers = @question.answers
+    respond_with(@answers = @question.answers)
   end
 
   def new
-    @question = Question.new
-    @question.attachments.build
+    respond_with(@question = Question.new)
   end
 
   def edit
   end
 
   def create
-    @question = current_user.questions.build(question_params)
-    if @question.save
-      flash[:success] = 'Your question successfully created.'
-      redirect_to @question
-    else
-      render :new
-    end
+    @question = Question.create(question_params)
+    respond_with @question
   end
 
   def update
-    if @question.update(question_params)
-      flash[:success] = 'Your question successfully updated.'
-      redirect_to @question
-    else
-      render :edit
-    end
+    @question.update(question_params)
+    respond_with @question
   end
 
   def destroy
     if current_user.author_of?(@question)
-      @question.destroy
-      flash[:success] = 'Question successfully deleted.'
-      redirect_to questions_path
-    else
-      flash.now[:error] = 'You not owner of this question'
+      respond_with(@question.destroy)
+    else 
       render 'questions/show'
     end
   end
@@ -61,11 +47,15 @@ class QuestionsController < ApplicationController
     @question = Question.find(params[:id])
   end
 
-  def question_params
-    params.require(:question).permit(:title, :content, attachments_attributes: [:file, :id, :_destroy])
+  def build_answer
+    @answer = @question.answers.build
   end
 
-  def publish_question(action)
-    PrivatePub.publish_to("/questions", question: @question.to_json, action: action) if @question.valid?
-  end  
+  def question_params
+    params.require(:question).permit(:title, :content, attachments_attributes: [:file, :id, :_destroy]).merge(user: current_user)
+  end
+
+  def publish_question
+    PrivatePub.publish_to("/questions", question: @question.to_json) if @question.valid?
+  end
 end

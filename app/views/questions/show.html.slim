@@ -28,7 +28,7 @@ hr
   = form_for([@question, @answer], remote: true) do |f|
     = f.label :content
     = f.text_field :content
-    = f.fields_for :attachments do |attachment|
+    = f.fields_for :attachments, @answer.attachments.build do |attachment|
       = render 'attachment_fields', f: attachment
     .links
       = link_to_add_association 'add file', f, :attachments

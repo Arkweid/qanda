@@ -18,7 +18,7 @@ feature 'Create question', '
       fill_in 'Content', with: 'Some text'
       click_on 'Create'
 
-      expect(page).to have_content 'Your question successfully created.'
+      expect(page).to have_content 'Question was successfully created.'
     end
 
     scenario 'his try create empty question' do

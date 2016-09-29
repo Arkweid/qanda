@@ -1,5 +1,3 @@
 <% if flash[:error].blank? %>
-  <% publish_to "/questions/#{@comment.commentable_id}/comments" do %>
     $('#comment-<%= @comment.id %>').remove();
-  <% end %>
 <% end %>
