@@ -13,5 +13,5 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       sign_in_and_redirect @user, event: :authentication
       set_flash_message(:notice, :success, kind: 'Twitter') if is_navigational_format?
     end
-  end  
+  end
 end

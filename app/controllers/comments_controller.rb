@@ -2,7 +2,7 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!
   before_action :load_commentable, only: [:create]
   before_action :load_comment, except: [:create]
-  #after_action :publish_comment, only: [:create]
+  # after_action :publish_comment, only: [:create]
 
   respond_to :js, :json
 
@@ -15,7 +15,7 @@ class CommentsController < ApplicationController
     respond_with(@comment.update(comment_params)) if current_user.author_of?(@comment)
   end
 
-  def destroy  
+  def destroy
     respond_with(@comment.destroy) if current_user.author_of?(@comment)
   end
 
@@ -38,6 +38,6 @@ class CommentsController < ApplicationController
   end
 
   def publish_comment
-    PrivatePub.publish_to("/questions/#{ question_id(@comment.commentable) }/comments", comment: @comment.to_json) if @comment.valid?
-  end  
+    PrivatePub.publish_to("/questions/#{question_id(@comment.commentable)}/comments", comment: @comment.to_json) if @comment.valid?
+  end
 end

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   it { should have_many(:answers).dependent(:destroy) }
   it { should have_many(:questions).dependent(:destroy) }
-  it { should have_many(:authorizations).dependent(:destroy) }  
+  it { should have_many(:authorizations).dependent(:destroy) }
 
   it { should validate_presence_of :email }
   it { should validate_presence_of :password }
@@ -84,7 +84,7 @@ RSpec.describe User, type: :model do
         it 'creates new user' do
           expect { User.find_for_oauth(auth) }.to change(User, :count).by(1)
         end
-        
+
         it 'returns new user' do
           expect(User.find_for_oauth(auth)).to be_a(User)
         end
@@ -107,5 +107,5 @@ RSpec.describe User, type: :model do
         end
       end
     end
-end  
+  end
 end
