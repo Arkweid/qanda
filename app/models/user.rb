@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   has_many :authorizations, dependent: :destroy
 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :omniauthable, omniauth_providers: [:facebook]
+         :recoverable, :rememberable, :trackable, :validatable, :omniauthable, omniauth_providers: [:facebook, :twitter]
 
   def author_of?(object)
     object.user_id == id

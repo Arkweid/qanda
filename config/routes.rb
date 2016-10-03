@@ -20,4 +20,7 @@ Rails.application.routes.draw do
   end
 
   resources :attachments, only: :destroy
+
+  get 'terms_and_conditions', to: 'user_agreements#terms_and_conditions'
+  get 'policies', to: 'user_agreements#policies'  
 end
