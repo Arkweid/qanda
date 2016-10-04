@@ -28,4 +28,17 @@ module AcceptanceHelper
                                                                           'secret' => 'mock_secret'
                                                                         })
   end
+
+  def mock_auth_hash_without_email(provider)
+    OmniAuth.config.mock_auth[provider.to_sym] = OmniAuth::AuthHash.new('provider' => provider,
+                                                                        'uid' => '123545',
+                                                                        'info' => {
+                                                                          'name' => 'mockuser',
+                                                                          'email' => nil
+                                                                        },
+                                                                        'credentials' => {
+                                                                          'token' => 'mock_token',
+                                                                          'secret' => 'mock_secret'
+                                                                        })
+  end
 end

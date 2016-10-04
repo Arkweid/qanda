@@ -7,27 +7,27 @@ feature 'User sign in via Facebook account', '
 ' do
 
   describe 'Access via Facebook account' do
-    context 'Already registred' do
-      given!(:user) { create :user, email: 'user@email.com' }
-
+    context 'with email' do
       scenario 'tries sign in via facebook' do
         visit new_user_session_path
         mock_auth_hash('facebook')
         click_on('Sign in with Facebook')
 
         expect(page).to have_content 'Successfully authenticated from Facebook account.'
-        expect(page).to have_content 'user@email.com'
         expect(current_path).to eq root_path
       end
     end
 
-    context 'Non-registred' do
+    context 'without email' do
       scenario 'tries sign in via facebook' do
         visit new_user_session_path
-        mock_auth_hash('facebook')
+        mock_auth_hash_without_email('facebook')
         click_on('Sign in with Facebook')
 
-        expect(page).to have_content 'Successfully authenticated from Facebook account.'
+        fill_in 'auth[info][email]', with: 'example@test.com'
+        click_on('Confirm')
+
+        expect(page).to have_content 'example@test.com'
         expect(current_path).to eq root_path
       end
     end

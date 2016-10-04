@@ -22,5 +22,9 @@ Rails.application.routes.draw do
   resources :attachments, only: :destroy
 
   get 'terms_and_conditions', to: 'user_agreements#terms_and_conditions'
-  get 'policies', to: 'user_agreements#policies'  
+  get 'policies', to: 'user_agreements#policies'
+
+  devise_scope :user do
+    post '/twitter', to: 'omniauth_callbacks#twitter'
+  end
 end

@@ -1,0 +1,4 @@
+= form_tag twitter_path do
+  = label_tag :email, 'Enter your email'
+  = email_field 'auth[info]', :email
+  = submit_tag 'Confirm'
