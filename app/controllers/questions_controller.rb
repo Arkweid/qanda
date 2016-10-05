@@ -17,6 +17,7 @@ class QuestionsController < ApplicationController
   end
 
   def new
+    authorize! :create, Question
     respond_with(@question = Question.new)
   end
 

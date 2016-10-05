@@ -19,7 +19,7 @@ gem 'responders', '~> 2.0'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
-gem 'forgery'
+gem 'cancancan', '~> 1.10'
 
 group :development, :test do
   gem 'rspec-rails'
