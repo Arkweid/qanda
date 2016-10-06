@@ -4,6 +4,8 @@ class CommentsController < ApplicationController
   before_action :load_comment, except: [:create]
   # after_action :publish_comment, only: [:create]
 
+  authorize_resource
+
   respond_to :js, :json
 
   def create
@@ -12,11 +14,11 @@ class CommentsController < ApplicationController
   end
 
   def update
-    respond_with(@comment.update(comment_params)) if current_user.author_of?(@comment)
+    respond_with(@comment.update(comment_params))
   end
 
   def destroy
-    respond_with(@comment.destroy) if current_user.author_of?(@comment)
+    respond_with(@comment.destroy)
   end
 
   private

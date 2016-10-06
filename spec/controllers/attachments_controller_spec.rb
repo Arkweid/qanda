@@ -13,12 +13,6 @@ RSpec.describe AttachmentsController, type: :controller do
         it 'try to delete question file' do
           expect { delete :destroy, id: question_file, format: :js }.not_to change(Attachment, :count)
         end
-
-        it 'render destoy template' do
-          delete :destroy, id: question_file, format: :js
-
-          expect(response).to render_template :destroy
-        end
       end
 
       context 'owner user' do
@@ -43,12 +37,6 @@ RSpec.describe AttachmentsController, type: :controller do
       context 'not owner user' do
         it 'try to delete answer file' do
           expect { delete :destroy, id: answer_file, format: :js }.not_to change(Attachment, :count)
-        end
-
-        it 'render destoy template' do
-          delete :destroy, id: answer_file, format: :js
-
-          expect(response).to render_template :destroy
         end
       end
 

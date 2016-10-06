@@ -4,6 +4,8 @@ class QuestionsController < ApplicationController
   before_action :build_answer, only: [:show]
   # after_action :publish_question, only: [:create]
 
+  authorize_resource
+
   include Voted
 
   respond_to :json
@@ -34,11 +36,7 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    if current_user.author_of?(@question)
-      respond_with(@question.destroy)
-    else
-      render 'questions/show'
-    end
+    respond_with(@question.destroy)
   end
 
   private
