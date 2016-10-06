@@ -2,7 +2,7 @@
   .votable-total id="votable-#{votable.class.name.downcase}-total-#{votable.id}"
     = votable.total
 
-  - if user_signed_in? && !current_user.author_of?(votable)  
+  - if can?(:like, votable)  
       ul id="votable-already-links-#{votable.id}" class=(current_user.voted?(votable) ? '' : 'hidden')
         li= link_to 'change vote', [:change_vote, votable], method: :patch, remote: true
         li= link_to 'cancel vote', [:cancel_vote, votable], method: :delete, remote: true

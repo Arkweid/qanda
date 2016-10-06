@@ -3,7 +3,7 @@
   p= @question.content
 
   p
-    - if user_signed_in? && current_user.author_of?(@question)
+    - if can?(:destroy, @question)
       = link_to('Delete question', question_path(@question), method: :delete)
 
   hr
@@ -24,7 +24,7 @@ hr
 .answer_errors
   = render 'questions/answer_errors'
 
-- if user_signed_in?
+- if can?(:create, Answer)
   = form_for([@question, @answer], remote: true) do |f|
     = f.label :content
     = f.text_field :content
