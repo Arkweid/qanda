@@ -8,18 +8,22 @@ module Voted
   end
   
   def like
+    authorize! :like, @votable
     respond_with(@votable.set_evaluate(current_user, 1), template: 'votes/vote.json.jbuilder')
   end
 
   def dislike
+    authorize! :dislike, @votable
     respond_with(@votable.set_evaluate(current_user, -1), template: 'votes/vote.json.jbuilder')
   end
 
   def change_vote
+    authorize! :change_vote, @votable
     respond_with(@votable.change_evaluate(current_user), template: 'votes/vote.json.jbuilder')
   end
 
   def cancel_vote
+    authorize! :cancel_vote, @votable
     respond_with(@votable.cancel_evaluate(current_user), template: 'votes/vote.json.jbuilder')
   end
 
