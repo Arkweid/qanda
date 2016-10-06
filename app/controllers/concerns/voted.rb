@@ -6,7 +6,7 @@ module Voted
 
     respond_to :json, only: [:like, :dislike, :change_vote, :cancel_vote]
   end
-
+  
   def like
     respond_with(@votable.set_evaluate(current_user, 1), template: 'votes/vote.json.jbuilder')
   end

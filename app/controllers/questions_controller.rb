@@ -4,9 +4,9 @@ class QuestionsController < ApplicationController
   before_action :build_answer, only: [:show]
   # after_action :publish_question, only: [:create]
 
-  authorize_resource
-
   include Voted
+
+  authorize_resource
 
   respond_to :json
 
