@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  use_doorkeeper
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
   root to: "questions#index"
 
@@ -26,5 +27,13 @@ Rails.application.routes.draw do
 
   devise_scope :user do
     post '/twitter', to: 'omniauth_callbacks#twitter'
+  end
+
+  namespace :api do
+    namespace :v1 do
+      resource :profiles do
+        get :me, on: :collection
+      end
+    end
   end
 end

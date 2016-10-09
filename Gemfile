@@ -20,6 +20,8 @@ gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
 gem 'cancancan', '~> 1.10'
+gem 'doorkeeper'
+gem 'omniauth-oauth2', '=1.3.1'
 
 group :development, :test do
   gem 'rspec-rails'
