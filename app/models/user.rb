@@ -6,6 +6,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable, omniauth_providers: [:facebook, :twitter]
 
+  scope :everybody_except_me, ->(me) { where.not(id: me) }
+
   def author_of?(object)
     object.user_id == id
   end
