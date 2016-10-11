@@ -2,7 +2,7 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :load_question, only: [:show, :edit, :update, :destroy]
   before_action :build_answer, only: [:show]
-  # after_action :publish_question, only: [:create]
+  after_action :publish_question, only: [:create]
 
   authorize_resource
 

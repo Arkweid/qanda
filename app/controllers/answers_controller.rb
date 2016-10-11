@@ -2,7 +2,7 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :load_answer, except: [:create]
   before_action :load_question, only: [:create]
-  # after_action :publish_answer, only: [:create]
+  after_action :publish_answer, only: [:create]
 
   authorize_resource
 
@@ -43,6 +43,6 @@ class AnswersController < ApplicationController
   end
 
   def publish_answer
-    PrivatePub.publish_to("/questions/#{@answer.question_id}/answers", answer: @answer.to_json) if @answer.valid?
+    PrivatePub.publish_to("/questions/#{ @answer.question_id }/answers", answer: @answer.to_json) if @answer.valid?
   end
 end

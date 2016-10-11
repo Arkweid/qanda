@@ -36,6 +36,14 @@ RSpec.describe AnswersController, type: :controller do
         expect(response).to render_template :create
       end
     end
+
+    context 'Private_pub' do
+      it 'recieve publish_to method' do
+        expect(PrivatePub).to receive(:publish_to)
+
+        post :create, answer: attributes_for(:answer), question_id: question, format: :js
+      end
+    end    
   end
 
   describe 'DELETE #destroy' do

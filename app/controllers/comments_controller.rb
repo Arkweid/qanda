@@ -2,7 +2,7 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!
   before_action :load_commentable, only: [:create]
   before_action :load_comment, except: [:create]
-  # after_action :publish_comment, only: [:create]
+  after_action :publish_comment, only: [:create]
 
   authorize_resource
 
@@ -40,6 +40,6 @@ class CommentsController < ApplicationController
   end
 
   def publish_comment
-    PrivatePub.publish_to("/questions/#{question_id(@comment.commentable)}/comments", comment: @comment.to_json) if @comment.valid?
+    PrivatePub.publish_to("/questions/#{ @comment.commentable }/comments", comment: @comment.to_json) if @comment.valid?
   end
 end

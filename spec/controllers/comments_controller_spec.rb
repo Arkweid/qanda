@@ -33,12 +33,20 @@ RSpec.describe CommentsController, type: :controller do
       end
     end
 
-    context 'with valid attributes' do
+    context 'with invalid attributes' do
       it 'save new comment for question' do
         expect { post :create, comment: attributes_for(:invalid_comment), commentable_type: 'question', question_id: question.id, format: :js }
           .to_not change(Comment, :count)
       end
     end
+
+    context 'Private_pub' do
+      it 'recieve publish_to method' do
+        expect(PrivatePub).to receive(:publish_to)
+        
+        post :create, commentable_type: 'question', comment: attributes_for(:comment), question_id: question.id, format: :js
+      end
+    end    
   end
 
   describe 'PATCH #update' do
