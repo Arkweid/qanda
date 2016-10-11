@@ -1,5 +1,4 @@
 require 'rails_helper'
-require Rails.root.join('spec/models/concerns/access_to_vote_spec')
 
 describe Ability do
   subject(:ability) { Ability.new(user) }

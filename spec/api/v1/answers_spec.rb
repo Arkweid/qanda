@@ -1,7 +1,4 @@
 require 'rails_helper'
-require Rails.root.join('spec/api/v1/concerns/api_authorization')
-require Rails.root.join('spec/api/v1/concerns/api_commentable')
-require Rails.root.join('spec/api/v1/concerns/api_attachable')
 
 describe 'Answers API' do
   let(:options) { Hash.new }
