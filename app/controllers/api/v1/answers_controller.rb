@@ -1,6 +1,7 @@
 class Api::V1::AnswersController < Api::V1::BaseController
   before_action :load_question, except: :show
-  #authorize_resource
+  
+  authorize_resource
 
   def index
     respond_with @question.answers
@@ -11,7 +12,7 @@ class Api::V1::AnswersController < Api::V1::BaseController
   end
   
   def create
-    respond_with(@answer = @question.answers.create(answer_params))
+    respond_with(@answer = @question.answers.create(answer_params.merge(user: current_resource_owner)))
   end
   
   private
@@ -21,6 +22,6 @@ class Api::V1::AnswersController < Api::V1::BaseController
   end
   
   def answer_params
-    params.require(:answer).permit(:content).merge(user: current_resource_owner)
+    params.require(:answer).permit(:content)
   end
 end
