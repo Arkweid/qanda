@@ -25,6 +25,9 @@ gem 'omniauth-oauth2', '=1.3.1'
 gem 'active_model_serializers'
 gem 'oj'
 gem 'oj_mimic_json'
+gem 'sidekiq'
+gem 'sinatra', '>= 1.3.0', require: nil
+gem 'sidetiq'
 
 group :development, :test do
   gem 'rspec-rails'
