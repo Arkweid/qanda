@@ -179,6 +179,11 @@ RSpec.describe QuestionsController, type: :controller do
       expect{ post :create, question: attributes_for(:invalid_question) }
         .to_not change(@user.subscriptions, :count)
     end
+
+    it 'render subscribe template' do
+      post :subscribe, id: question, format: :js
+      expect(response).to render_template :subscribe
+    end    
   end
 
   describe 'DELETE #unsubscribe' do
@@ -197,6 +202,11 @@ RSpec.describe QuestionsController, type: :controller do
       post :unsubscribe, id: question, format: :js
 
       expect(@user.subscriptions.size).to eq 0
+    end
+
+    it 'render unsubscribe template' do
+      post :unsubscribe, id: question, format: :js
+      expect(response).to render_template :unsubscribe
     end
   end
 
