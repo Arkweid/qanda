@@ -4,6 +4,7 @@ RSpec.describe User, type: :model do
   it { should have_many(:answers).dependent(:destroy) }
   it { should have_many(:questions).dependent(:destroy) }
   it { should have_many(:authorizations).dependent(:destroy) }
+  it { should have_many(:subscriptions).dependent(:destroy) }
 
   it { should validate_presence_of :email }
   it { should validate_presence_of :password }
@@ -109,12 +110,47 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe '.send_daily_digest' do
-    let(:users) { create_list(:user, 2) }
+  describe 'subscriptions methods' do
+    let(:user) { create :user }
+    let(:question) { create(:question, user: user) }
 
-    it 'should send daily digest to all users' do
-      users.each { |user| expect(DailyMailer).to receive(:digest).with(user).and_call_original }
-      User.send_daily_digest
+    context '.subscribe_to' do
+      it 'make new record' do
+        expect { user.subscribe_to(question) }.to change(Subscription, :count).by(1)
+      end
+      
+      it 'should subscribe user to question' do
+        expect { user.subscribe_to(question) }.to change(user.subscriptions, :count).by(1)
+      end
+
+      it 'subscribe only once' do
+        user.subscribe_to(question)
+        user.subscribe_to(question)
+
+        expect(user.subscriptions.size).to eq 1
+      end      
     end
-  end  
+
+    context '.unsubscribe_from' do
+      it 'unsubscribe user from question' do
+        user.subscribe_to(question)
+        expect { user.unsubscribe_from(question) }.to change(user.subscriptions, :count).by(-1)
+      end
+
+      it 'delete nothing if user not subscribed' do
+        expect { user.unsubscribe_from(question) }.to_not change(Subscription, :count)
+      end
+    end
+
+    context '.subscribe?' do
+      it 'return true if user subscribed' do
+        user.subscribe_to(question)        
+        expect(user.subscribed?(question)).to eq true
+      end
+
+      it 'return true if user subscribed' do
+        expect(user.subscribed?(question)).to eq false
+      end      
+    end        
+  end
 end
