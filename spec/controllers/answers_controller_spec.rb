@@ -43,7 +43,15 @@ RSpec.describe AnswersController, type: :controller do
 
         post :create, answer: attributes_for(:answer), question_id: question, format: :js
       end
-    end    
+    end
+
+    context 'NoticeJob' do
+      it 'recieve perform_later method' do
+        expect(NoticeJob).to receive(:perform_later)
+
+        post :create, answer: attributes_for(:answer), question_id: question, format: :js
+      end      
+    end
   end
 
   describe 'DELETE #destroy' do
