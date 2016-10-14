@@ -40,13 +40,4 @@ class User < ActiveRecord::Base
   def create_authorization(auth)
     authorizations.create(provider: auth.provider, uid: auth.uid)
   end
-
-  def self.send_daily_digest
-    find_each.each do |user|
-      #DailyMailer.delay.digest(user)
-    end
-  end
-  
-  def self.ghost_method
-  end  
 end
