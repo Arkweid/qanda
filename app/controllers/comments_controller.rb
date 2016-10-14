@@ -40,6 +40,6 @@ class CommentsController < ApplicationController
   end
 
   def publish_comment
-    PrivatePub.publish_to("/questions/#{ @comment.commentable }/comments", comment: @comment.to_json) if @comment.valid?
+    PrivatePub.publish_to("/questions/#{@comment.commentable}/comments", comment: @comment.to_json) if @comment.valid?
   end
 end

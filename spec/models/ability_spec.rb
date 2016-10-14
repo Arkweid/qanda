@@ -66,7 +66,7 @@ describe Ability do
 
     context 'subscribe' do
       it { should be_able_to :subscribe, Question }
-      it { should be_able_to :unsubscribe, Question }  
+      it { should be_able_to :unsubscribe, Question }
     end
 
     let(:user_subject) { user_question }

@@ -68,6 +68,6 @@ class QuestionsController < ApplicationController
   end
 
   def subscribe_owner
-    current_user.subscribe_to(@question) if @question.valid?    
+    current_user.subscribe_to(@question) if @question.valid?
   end
 end

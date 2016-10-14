@@ -44,10 +44,10 @@ class AnswersController < ApplicationController
   end
 
   def publish_answer
-    PrivatePub.publish_to("/questions/#{ @answer.question_id }/answers", answer: @answer.to_json) if @answer.valid?
+    PrivatePub.publish_to("/questions/#{@answer.question_id}/answers", answer: @answer.to_json) if @answer.valid?
   end
 
   def notiсe_subscribers
     NoticeJob.perform_later(@answer) if @answer.valid?
-  end  
+  end
 end

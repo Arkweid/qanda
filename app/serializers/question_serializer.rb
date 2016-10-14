@@ -3,7 +3,7 @@ class QuestionSerializer < ActiveModel::Serializer
   has_many :answers
   has_many :attachments
   has_many :comments
-  
+
   def short_title
     object.title.truncate(10)
   end

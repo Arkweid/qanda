@@ -50,7 +50,7 @@ RSpec.describe AnswersController, type: :controller do
         expect(NoticeJob).to receive(:perform_later)
 
         post :create, answer: attributes_for(:answer), question_id: question, format: :js
-      end      
+      end
     end
   end
 

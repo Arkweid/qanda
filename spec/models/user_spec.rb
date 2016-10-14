@@ -118,7 +118,7 @@ RSpec.describe User, type: :model do
       it 'make new record' do
         expect { user.subscribe_to(question) }.to change(Subscription, :count).by(1)
       end
-      
+
       it 'should subscribe user to question' do
         expect { user.subscribe_to(question) }.to change(user.subscriptions, :count).by(1)
       end
@@ -128,7 +128,7 @@ RSpec.describe User, type: :model do
         user.subscribe_to(question)
 
         expect(user.subscriptions.size).to eq 1
-      end      
+      end
     end
 
     context '.unsubscribe_from' do
@@ -144,13 +144,13 @@ RSpec.describe User, type: :model do
 
     context '.subscribe?' do
       it 'return true if user subscribed' do
-        user.subscribe_to(question)        
+        user.subscribe_to(question)
         expect(user.subscribed?(question)).to eq true
       end
 
       it 'return true if user subscribed' do
         expect(user.subscribed?(question)).to eq false
-      end      
-    end        
+      end
+    end
   end
 end

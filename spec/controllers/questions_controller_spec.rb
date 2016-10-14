@@ -159,7 +159,7 @@ RSpec.describe QuestionsController, type: :controller do
     let(:question) { create :question }
 
     it 'make new subscription' do
-      expect{ post :subscribe, id: question, format: :js }.to change(Subscription, :count).by(1)
+      expect { post :subscribe, id: question, format: :js }.to change(Subscription, :count).by(1)
     end
 
     it 'make new subscription only once' do
@@ -176,14 +176,14 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     it 'question owner not subscribed to invalid question' do
-      expect{ post :create, question: attributes_for(:invalid_question) }
+      expect { post :create, question: attributes_for(:invalid_question) }
         .to_not change(@user.subscriptions, :count)
     end
 
     it 'render subscribe template' do
       post :subscribe, id: question, format: :js
       expect(response).to render_template :subscribe
-    end    
+    end
   end
 
   describe 'DELETE #unsubscribe' do
@@ -194,7 +194,7 @@ RSpec.describe QuestionsController, type: :controller do
     before { post :subscribe, id: question, format: :js }
 
     it 'unsubscribe user' do
-      expect{ post :unsubscribe, id: question, format: :js }.to change(@user.subscriptions, :count).by(-1)
+      expect { post :unsubscribe, id: question, format: :js }.to change(@user.subscriptions, :count).by(-1)
     end
 
     it 'delete only one record' do

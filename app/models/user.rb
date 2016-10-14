@@ -43,14 +43,14 @@ class User < ActiveRecord::Base
   end
 
   def subscribed?(question)
-    self.subscriptions.where(question: question).exists?
+    subscriptions.where(question: question).exists?
   end
 
   def subscribe_to(question)
-    self.subscriptions.find_or_create_by(question: question)
+    subscriptions.find_or_create_by(question: question)
   end
 
   def unsubscribe_from(question)
-    self.subscriptions.where(question: question).delete_all if subscribed?(question)
+    subscriptions.where(question: question).delete_all if subscribed?(question)
   end
 end

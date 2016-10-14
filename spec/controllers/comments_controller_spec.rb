@@ -43,10 +43,10 @@ RSpec.describe CommentsController, type: :controller do
     context 'Private_pub' do
       it 'recieve publish_to method' do
         expect(PrivatePub).to receive(:publish_to)
-        
+
         post :create, commentable_type: 'question', comment: attributes_for(:comment), question_id: question.id, format: :js
       end
-    end    
+    end
   end
 
   describe 'PATCH #update' do
