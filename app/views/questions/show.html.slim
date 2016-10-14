@@ -6,6 +6,12 @@
     - if can?(:destroy, @question)
       = link_to('Delete question', question_path(@question), method: :delete)
 
+  .subscriptions
+    ul id="question-unsubscribe-link" class=(current_user.subscribed?(@question) ? '' : 'hidden')    
+      li=link_to 'Unubscribe', unsubscribe_question_path(@question), remote: true, method: :delete
+    ul id="question-subscribe-link" class=(current_user.subscribed?(@question) ? 'hidden' : '')    
+      li=link_to 'Subscribe', subscribe_question_path(@question), remote: true, method: :post
+
   hr
 
   = render partial: 'attachments/attachments', locals: { object: @question }

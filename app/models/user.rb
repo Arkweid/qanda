@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   has_many :questions, dependent: :destroy
   has_many :answers, dependent: :destroy
   has_many :authorizations, dependent: :destroy
+  has_many :subscriptions, dependent: :destroy
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable, omniauth_providers: [:facebook, :twitter]
@@ -39,5 +40,17 @@ class User < ActiveRecord::Base
 
   def create_authorization(auth)
     authorizations.create(provider: auth.provider, uid: auth.uid)
+  end
+
+  def subscribed?(question)
+    self.subscriptions.where(question: question).exists?
+  end
+
+  def subscribe_to(question)
+    self.subscriptions.find_or_create_by(question: question)
+  end
+
+  def unsubscribe_from(question)
+    self.subscriptions.where(question: question).delete_all if subscribed?(question)
   end
 end

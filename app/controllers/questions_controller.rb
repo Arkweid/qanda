@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :load_question, only: [:show, :edit, :update, :destroy]
+  before_action :load_question, only: [:show, :edit, :update, :destroy, :subscribe, :unsubscribe]
   before_action :build_answer, only: [:show]
   after_action :publish_question, only: [:create]
 
@@ -9,6 +9,7 @@ class QuestionsController < ApplicationController
   include Voted
 
   respond_to :json
+  respond_to :js, only: [:subscribe, :unsubscribe]
 
   def index
     respond_with(@questions = Question.all)
@@ -37,6 +38,14 @@ class QuestionsController < ApplicationController
 
   def destroy
     respond_with(@question.destroy)
+  end
+
+  def subscribe
+    respond_with(current_user.subscribe_to(@question))
+  end
+
+  def unsubscribe
+    respond_with(current_user.unsubscribe_from(@question))
   end
 
   private

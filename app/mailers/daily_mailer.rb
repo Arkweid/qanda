@@ -3,5 +3,5 @@ class DailyMailer < ApplicationMailer
     @questions = Question.from_yesterday
 
     mail to: user.email, subject: 'Question digest'
-  end  
+  end
 end
