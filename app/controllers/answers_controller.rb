@@ -48,6 +48,6 @@ class AnswersController < ApplicationController
   end
 
   def notiсe_subscribers
-    NoticeJob.perform_later
+    NoticeJob.perform_later(@answer) if @answer.valid?
   end  
 end
