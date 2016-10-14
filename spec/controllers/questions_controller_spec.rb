@@ -153,5 +153,52 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
+  describe 'POST #subscribe' do
+    sign_in_user
+
+    let(:question) { create :question }
+
+    it 'make new subscription' do
+      expect{ post :subscribe, id: question, format: :js }.to change(Subscription, :count).by(1)
+    end
+
+    it 'make new subscription only once' do
+      post :subscribe, id: question, format: :js
+      post :subscribe, id: question, format: :js
+
+      expect(@user.subscriptions.size).to eq 1
+    end
+
+    it 'question owner alredy subscribed' do
+      post :create, question: attributes_for(:question)
+
+      expect(@user.subscriptions.size).to eq 1
+    end
+
+    it 'question owner not subscribed to invalid question' do
+      expect{ post :create, question: attributes_for(:invalid_question) }
+        .to_not change(@user.subscriptions, :count)
+    end
+  end
+
+  describe 'DELETE #unsubscribe' do
+    sign_in_user
+
+    let(:question) { create :question }
+
+    before { post :subscribe, id: question, format: :js }
+
+    it 'unsubscribe user' do
+      expect{ post :unsubscribe, id: question, format: :js }.to change(@user.subscriptions, :count).by(-1)
+    end
+
+    it 'delete only one record' do
+      post :unsubscribe, id: question, format: :js
+      post :unsubscribe, id: question, format: :js
+
+      expect(@user.subscriptions.size).to eq 0
+    end
+  end
+
   it_behaves_like 'voted', 'question'
 end

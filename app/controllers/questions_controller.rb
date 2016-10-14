@@ -28,6 +28,7 @@ class QuestionsController < ApplicationController
 
   def create
     @question = Question.create(question_params)
+    current_user.subscribe_to(@question) if @question.valid?
     respond_with @question
   end
 
