@@ -3,6 +3,7 @@ class QuestionsController < ApplicationController
   before_action :load_question, only: [:show, :edit, :update, :destroy, :subscribe, :unsubscribe]
   before_action :build_answer, only: [:show]
   after_action :publish_question, only: [:create]
+  after_action :subscribe_owner, only: [:create]
 
   authorize_resource
 
@@ -28,7 +29,6 @@ class QuestionsController < ApplicationController
 
   def create
     @question = Question.create(question_params)
-    current_user.subscribe_to(@question) if @question.valid?
     respond_with @question
   end
 
@@ -65,5 +65,9 @@ class QuestionsController < ApplicationController
 
   def publish_question
     PrivatePub.publish_to('/questions', question: @question.to_json) if @question.valid?
+  end
+
+  def subscribe_owner
+    current_user.subscribe_to(@question) if @question.valid?    
   end
 end
