@@ -64,6 +64,11 @@ describe Ability do
       it { should_not be_able_to :destroy, create(:attachment, attachable: other_question), user: user }
     end
 
+    context 'subscribe' do
+      it { should be_able_to :subscribe, Question }
+      it { should be_able_to :unsubscribe, Question }  
+    end
+
     let(:user_subject) { user_question }
     let(:other_subject) { other_question }
     it_behaves_like 'Access to vote'
