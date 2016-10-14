@@ -3,6 +3,7 @@ class AnswersController < ApplicationController
   before_action :load_answer, except: [:create]
   before_action :load_question, only: [:create]
   after_action :publish_answer, only: [:create]
+  after_create :notiсe_subscribers
 
   authorize_resource
 
@@ -45,4 +46,8 @@ class AnswersController < ApplicationController
   def publish_answer
     PrivatePub.publish_to("/questions/#{ @answer.question_id }/answers", answer: @answer.to_json) if @answer.valid?
   end
+
+  def notice_subscribers
+    NoticeJob.perform_later(self)
+  end  
 end
