@@ -7,7 +7,7 @@ class Question < ActiveRecord::Base
   has_many :subscriptions, dependent: :destroy
   belongs_to :user
 
-  scope :from_yesterday, -> { where(created_at: (Time.now - 1.day).beginning_of_day.utc..(Time.now - 1.day).end_of_day.utc) }
+  scope :from_yesterday, -> { where(created_at: 1.day.ago.all_day) }
 
   validates :user_id, :content, :title, presence: true
 

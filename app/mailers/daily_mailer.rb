@@ -1,7 +1,7 @@
 class DailyMailer < ApplicationMailer
-  def digest(user)
-    @questions = Question.from_yesterday
+  attr_accessor :questions
 
+  def digest(user)
     mail to: user.email, subject: 'Question digest'
   end
 end

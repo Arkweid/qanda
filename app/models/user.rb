@@ -51,6 +51,6 @@ class User < ActiveRecord::Base
   end
 
   def unsubscribe_from(question)
-    subscriptions.where(question: question).delete_all if subscribed?(question)
+    subscriptions.where(question: question).delete_all
   end
 end
