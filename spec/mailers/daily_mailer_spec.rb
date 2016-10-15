@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe DailyMailer, type: :mailer do
-  describe 'digest' do
-    let(:questions) { create_list(:question, 2, created_at: 1.day.ago) }    
+  describe 'digest' do  
     let(:user) { create :user }
     let(:mail) { DailyMailer.digest(user) }
 
