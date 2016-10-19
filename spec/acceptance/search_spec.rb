@@ -1,5 +1,4 @@
-#require_relative 'acceptance_helper'
-require_relative 'acceptance_thinking_sphinx_helper'
+require_relative 'acceptance_helper'
 
 feature 'Users can locate content by searching for', %q{
   In order to be able to find questions interested for me
@@ -7,18 +6,63 @@ feature 'Users can locate content by searching for', %q{
   I want to be able to search questions
 } do
 
-  given!(:question) { create :question, title: 'longtitle', content: 'longcontent' }
+  given!(:user) { create :user, email: 'longtitle@example.com' }  
+  given!(:question) { create :question, title: 'longtitle question', content: 'longcontent question' }
+  given!(:answer) { create :answer, content: 'longcontent answer' }
+  given!(:comment) { create :comment, content: 'longcontent comment', commentable_id: question.id, commentable_type: 'Question' }  
 
-  describe 'Non-registered user' do
-    scenario 'try to search question', sphinx: true do
-      visit root_path
-      fill_in 'q', with: 'longtitle'
-      select('Question', from: 'a')
+  before do
+    visit root_path    
+    fill_in 'q', with: 'longtitle'    
+  end
+
+  scenario 'try to search all', sphinx: true do
+    ThinkingSphinx::Test.run do
+      select('Everywhere', from: 'a')
       click_on 'search_button'
-      save_and_open_page
 
       expect(current_path).to eq search_path
-      expect(page).to have_content question.content
+
+      expect(page).to have_content user.email
+      expect(page).to have_content question.content    
+      expect(page).to have_content answer.content
+      expect(page).to have_content comment.content
     end
   end
+
+  scenario 'try to search question', sphinx: true do
+    ThinkingSphinx::Test.run do
+      select('Question', from: 'a')
+      click_on 'search_button'
+
+      expect(page).to have_content question.content    
+    end
+  end
+
+  scenario 'try to search answer', sphinx: true do
+    ThinkingSphinx::Test.run do
+      select('Answer', from: 'a')
+      click_on 'search_button'
+
+      expect(page).to have_content answer.content    
+    end
+  end
+
+  scenario 'try to search comment', sphinx: true do
+    ThinkingSphinx::Test.run do
+      select('Comment', from: 'a')
+      click_on 'search_button'
+
+      expect(page).to have_content comment.content    
+    end
+  end
+
+  scenario 'try to search user', sphinx: true do
+    ThinkingSphinx::Test.run do
+      select('User', from: 'a')
+      click_on 'search_button'
+
+      expect(page).to have_content user.email    
+    end
+  end    
 end
