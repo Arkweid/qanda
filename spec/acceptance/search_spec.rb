@@ -35,7 +35,10 @@ feature 'Users can locate content by searching for', %q{
       select('Question', from: 'a')
       click_on 'search_button'
 
-      expect(page).to have_content question.content    
+      expect(page).to have_content question.content  
+      expect(page).to_not have_content user.email
+      expect(page).to_not have_content answer.content
+      expect(page).to_not have_content comment.content
     end
   end
 
@@ -44,7 +47,10 @@ feature 'Users can locate content by searching for', %q{
       select('Answer', from: 'a')
       click_on 'search_button'
 
-      expect(page).to have_content answer.content    
+      expect(page).to have_content answer.content
+      expect(page).to_not have_content user.email
+      expect(page).to_not have_content question.content    
+      expect(page).to_not have_content comment.content  
     end
   end
 
@@ -53,7 +59,10 @@ feature 'Users can locate content by searching for', %q{
       select('Comment', from: 'a')
       click_on 'search_button'
 
-      expect(page).to have_content comment.content    
+      expect(page).to have_content comment.content  
+      expect(page).to_not have_content user.email
+      expect(page).to_not have_content question.content    
+      expect(page).to_not have_content answer.content     
     end
   end
 
@@ -63,6 +72,9 @@ feature 'Users can locate content by searching for', %q{
       click_on 'search_button'
 
       expect(page).to have_content user.email    
+      expect(page).to_not have_content question.content    
+      expect(page).to_not have_content answer.content
+      expect(page).to_not have_content comment.content      
     end
   end    
 end
