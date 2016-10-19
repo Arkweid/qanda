@@ -4,3 +4,10 @@
     h4= highlight(link_to(result.title, result), params[:q]) if result.respond_to?(:title)
     h4= highlight(result.email, params[:q]) if result.respond_to?(:email)
     p= highlight(result.content, params[:q]) if result.respond_to?(:content)
+
+p debug list:
+table.questions
+  - Question.all.each do |question|
+    tr
+      td.question_title = question.title
+      td.question_link = link_to 'show', question_path(question)    
