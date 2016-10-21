@@ -6,14 +6,14 @@ feature 'Users can locate content by searching for', %q{
   I want to be able to search questions
 } do
 
-  given!(:user) { create :user, email: 'longtitle@example.com' }  
-  given!(:question) { create :question, title: 'longtitle question', content: 'longcontent question' }
-  given!(:answer) { create :answer, content: 'longcontent answer' }
-  given!(:comment) { create :comment, content: 'longcontent comment', commentable_id: question.id, commentable_type: 'Question' }  
+  given!(:user) { create :user, email: 'longtitle@example.com' }
+  given!(:question) { create :question, title: 'longtitle question', content: 'longtitle question' }
+  given!(:answer) { create :answer, content: 'longtitle answer' }
+  given!(:comment) { create :comment, content: 'longtitle comment', commentable_id: question.id, commentable_type: 'Question' }  
 
   before do
-    visit root_path    
-    fill_in 'q', with: 'longtitle'    
+    visit root_path
+    fill_in 'q', with: 'longtitle'
   end
 
   scenario 'try to search all', sphinx: true do
@@ -24,7 +24,7 @@ feature 'Users can locate content by searching for', %q{
       expect(current_path).to eq search_path
 
       expect(page).to have_content user.email
-      expect(page).to have_content question.content    
+      expect(page).to have_content question.content
       expect(page).to have_content answer.content
       expect(page).to have_content comment.content
     end
@@ -35,7 +35,7 @@ feature 'Users can locate content by searching for', %q{
       select('Question', from: 'a')
       click_on 'search_button'
 
-      expect(page).to have_content question.content  
+      expect(page).to have_content question.content
       expect(page).to_not have_content user.email
       expect(page).to_not have_content answer.content
       expect(page).to_not have_content comment.content
@@ -49,8 +49,8 @@ feature 'Users can locate content by searching for', %q{
 
       expect(page).to have_content answer.content
       expect(page).to_not have_content user.email
-      expect(page).to_not have_content question.content    
-      expect(page).to_not have_content comment.content  
+      expect(page).to_not have_content question.content
+      expect(page).to_not have_content comment.content
     end
   end
 
@@ -59,10 +59,10 @@ feature 'Users can locate content by searching for', %q{
       select('Comment', from: 'a')
       click_on 'search_button'
 
-      expect(page).to have_content comment.content  
+      expect(page).to have_content comment.content
       expect(page).to_not have_content user.email
-      expect(page).to_not have_content question.content    
-      expect(page).to_not have_content answer.content     
+      expect(page).to_not have_content question.content
+      expect(page).to_not have_content answer.content
     end
   end
 
@@ -71,10 +71,10 @@ feature 'Users can locate content by searching for', %q{
       select('User', from: 'a')
       click_on 'search_button'
 
-      expect(page).to have_content user.email    
-      expect(page).to_not have_content question.content    
+      expect(page).to have_content user.email
+      expect(page).to_not have_content question.content
       expect(page).to_not have_content answer.content
-      expect(page).to_not have_content comment.content      
+      expect(page).to_not have_content comment.content
     end
-  end    
+  end
 end
