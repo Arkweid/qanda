@@ -8,6 +8,7 @@ set :repo_url, 'git@github.com:Arkweid/qanda.git'
 set :deploy_to, '/home/deployer/qanda'
 set :deploy_user, 'deployer'
 
+
 # Default value for :format is :airbrussh.
 # set :format, :airbrussh
 
@@ -23,6 +24,8 @@ append :linked_files, 'config/database.yml', 'config/secrets.yml', 'config/priva
 
 # Default value for linked_dirs is []
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system', 'public/uploads'
+
+set :format, :pretty
 
 namespace :deploy do
   desc 'Restart application'
@@ -70,5 +73,21 @@ namespace :private_pub do
     end
   end
 end
+
+
+#set :unicorn_conf, "#{deploy_to}/current/config/unicorn.rb"
+#set :unicorn_pid, "#{deploy_to}/shared/pids/unicorn.pid"
+#set :rails_env, "production"
+#namespace :unicorn do
+#  task :restart do
+#    run "if [ -f #{unicorn_pid} ] && [ -e /proc/$(cat #{unicorn_pid}) ]; then kill -USR2 `cat #{unicorn_pid}`; else cd #{deploy_to}/current && bundle exec unicorn_rails -c #{unicorn_conf} -E #{rails_env} -D; fi"
+#  end
+#  task :start do
+#    run "bundle exec unicorn_rails -c #{unicorn_conf} -E #{rails_env} -D"
+#  end
+#  task :stop do
+#    run "if [ -f #{unicorn_pid} ] && [ -e /proc/$(cat #{unicorn_pid}) ]; then kill -QUIT `cat #{unicorn_pid}`; fi"
+#  end
+#end
 
 after 'deploy:restart', 'private_pub:restart'
