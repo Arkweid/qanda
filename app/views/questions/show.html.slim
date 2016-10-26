@@ -1,6 +1,7 @@
 .question
-  h1= @question.title
-  p= @question.content
+  - cache @question do
+    h1= @question.title
+    p= @question.content
 
   p
     - if can?(:destroy, @question)

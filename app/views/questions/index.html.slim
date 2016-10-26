@@ -1,10 +1,11 @@
 - if can?(:create, Question)
   p = link_to 'Ask question', new_question_path
 
-table.questions
-  - @questions.each do |question|
-    tr
-      td.question_title = question.title
-      td.question_link = link_to 'show', question_path(question)
+- cache collection_cache_key_for :question do
+  table.questions
+    - @questions.each do |question|
+      tr
+        td.question_title = question.title
+        td.question_link = link_to 'show', question_path(question)
 
 = subscribe_to "/questions"
