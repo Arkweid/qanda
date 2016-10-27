@@ -1,6 +1,7 @@
 .comment id="comment-#{ comment.id }"
   ul
-    li = comment.content
+    - cache comment do
+      li = comment.content
     - if can?(:destroy, @comment)
       li = link_to 'Delete comment', comment_path(comment), method: :delete, remote: true
     - if can?(:update, @comment)
